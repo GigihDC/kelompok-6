@@ -28,6 +28,13 @@
 </head>
 <body>
 
+<?php 
+session_start();
+if ($_SESSION['status']!="login") {
+    header("location:index.php?pesan=belum_login");
+}
+?>
+
  <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
@@ -139,6 +146,7 @@
                         <th class="tbl text-center">NAMA SAMPAH</th>
                         <th class="tbl text-center">JENIS SAMPAH</th>
                         <th class="tbl text-center">JUMLAH SAMPAH</th>
+                        <th class="tbl text-center">POINT</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,7 +154,7 @@
                     <?php
                     include 'koneksi.php';
                     $sql = "SELECT * FROM daftar_sampah";
-                    $hasil = mysqli_query($conn,$sql);
+                    $hasil = mysqli_query($koneksi,$sql);
                     $nomer = 1;
                     while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
                     ?>
@@ -157,6 +165,7 @@
                         <td><?php echo $data['nama_sampah']; ?></td>
                         <td><?php echo $data['jenis_sampah']; ?></td>
                         <td class="jumlah text-center"><?php echo $data['jumlah_sampah']; ?></td>
+                        <td class="jumlah text-center"><?php echo $data['point']; ?></td>
                     </tr>
                     
                     <?php 
@@ -191,6 +200,11 @@
    <div class="footer-sec">
     <div class="container">
         <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
+                <h3> <strong>CONTACT PERSON</strong> </h3>
+                <br />
+                <a href="#" ><h4>WHATSAPP: 082331879753 </h4></a>
+            </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
                 <h3> <strong>SOCIAL MEDIA</strong> </h3>
                 <br />
@@ -201,7 +215,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <h3> <strong>ALAMAT KANTOR</strong> </h3>
                 <br />
-                <h4>Jalan Menuju Kenangan,</h4>
+                <h4>Jalan Menuju Kenangan indah no.33,</h4>
                 <h4>Talangsari, JEMBER,</h4>
                 <h4>INDONESIA</h4>
             </div>

@@ -29,6 +29,13 @@
 </head>
 <body>
 
+<?php 
+session_start();
+if ($_SESSION['status']!="login") {
+    header("location:index.php?pesan=belum_login");
+}
+?>
+
  <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
@@ -80,7 +87,7 @@
                 <div class="txt-block">
 
               
-									<h1 class="head-line">OUR Gallery</h1>
+									<h1 class="head-line">TRANSAKSI</h1>
 									
                       </div>
             </div>
@@ -88,350 +95,106 @@
 
     </div>
     </div>
-    <!-- BELOW SLIDESHOW SECTION END-->
-     
-    <div class="just-sec" id="port-folio">
-        
+    <!-- AKHIR JUDUL -->
 
-        <div class="container">
-            
-            <div class="row " >
-                  <ul id="filters" >
-						<li><span class="filter active" data-filter="landscape nature awesome">All </span></li>
-						<li><span class="filter active">/</span></li>
-						<li><span class="filter" data-filter="landscape">Landscape</span></li>
-						<li><span class="filter">/</span></li>
-						<li><span class="filter" data-filter="nature">Nature</span></li>
-						<li><span class="filter">/</span></li>
-						<li><span class="filter" data-filter="awesome">Awesome</span></li>
-					</ul>
-              <div class="col-md-4 ">
-
-                    <div class="portfolio-item awesome mix_all" data-cat="awesome" >
-
-
-                        <img src="assets/img/portfolio/g.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                            <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info " title="Image Title Here" href="assets/img/portfolio/g.jpg"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ">
-
-                    <div class="portfolio-item landscape mix_all" data-cat="landscape" >
-
-
-                        <img src="assets/img/portfolio/b.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                            <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info" title="Image Title Here" href="assets/img/portfolio/b.jpg"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ">
-
-                    <div class="portfolio-item nature mix_all" data-cat="nature" >
-
-
-                        <img src="assets/img/portfolio/c.png" class="img-responsive " alt="" />
-                        <div class="overlay">
-                          <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info" title="Image Title Here" href="assets/img/portfolio/c.png"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
-                </div>
-
+    <div class="container">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">TRANSAKSI JUAL</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">TRANSAKSI BELI</a></li>
+                </ul>
             </div>
+            <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                        <div>
+                        </br></br>
+                        <table border="1" class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="tbl text-center">No</th>
+                                    <th class="tbl text-center">KODE TRANSAKSI</th>
+                                    <th class="tbl text-center">TANGGAL</th>
+                                    <th class="tbl text-center">WAKTU</th>
+                                    <th class="tbl text-center">NAMA PEGAWAI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-             <div class="row " style="padding-top: 50px;">
-                <div class="col-md-4 ">
-
-                    <div  class="portfolio-item nature mix_all" data-cat="nature" >
-
-
-                        <img src="assets/img/portfolio/d.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                           <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info " title="Image Title Here" href="assets/img/portfolio/d.jpg"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
+                            <?php
+                            include 'koneksi.php';
+                            $sql = "SELECT * FROM transaksi_jual";
+                            $hasil = mysqli_query($koneksi,$sql);
+                            $nomer = 1;
+                            while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
+                            ?>
+                            
+                            <tr>
+                                <td class="no text-center"><?php echo $nomer++; ?></td>
+                                <td><?php echo $data['kode_transaksi']; ?></td>
+                                <td><?php echo $data['tanggal']; ?></td>
+                                <td><?php echo $data['waktu']; ?></td>
+                                <td><?php echo $data['nama_pegawai']; ?></td>
+                            </tr>
+                            
+                            <?php 
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                        </br></br><hr>
                     </div>
                 </div>
-                <div class="col-md-4 ">
+                  <div class="tab-pane" id="timeline">
+                  <div>
+                  </br></br>
+                    <table border="1" class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="tbl text-center">No</th>
+                                    <th class="tbl text-center">KODE TRANSAKSI</th>
+                                    <th class="tbl text-center">TANGGAL</th>
+                                    <th class="tbl text-center">WAKTU</th>
+                                    <th class="tbl text-center">NAMA PEGAWAI</th>
+                                    <th class="tbl text-center">TOTAL POINT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    <div  class="portfolio-item nature mix_all" data-cat="nature" >
-
-
-                        <img src="assets/img/portfolio/e.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                            <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info" title="Image Title Here" href="assets/img/portfolio/e.jpg"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
+                            <?php
+                            include 'koneksi.php';
+                            $sql = "SELECT * FROM transaksi_beli";
+                            $hasil = mysqli_query($koneksi,$sql);
+                            $nomer = 1;
+                            while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
+                            ?>
+                            
+                            <tr>
+                                <td class="no text-center"><?php echo $nomer++; ?></td>
+                                <td><?php echo $data['kode_transaksi']; ?></td>
+                                <td><?php echo $data['tanggal']; ?></td>
+                                <td><?php echo $data['waktu']; ?></td>
+                                <td><?php echo $data['nama_pegawai']; ?></td>
+                                <td><?php echo $data['total_point']; ?></td>
+                            </tr>
+                            
+                            <?php 
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                        </br></br><hr>
                 </div>
-                <div class="col-md-4 ">
-
-                    <div  class="portfolio-item nature mix_all" data-cat="nature" >
-
-
-                        <img src="assets/img/portfolio/h.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                          <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info" title="Image Title Here" href="assets/img/portfolio/h.jpg"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
+                  </div>
                 </div>
-
+              </div>
             </div>
-                    <div class="row "  style="padding-top: 50px;" >
-                <div class="col-md-4 ">
-
-                    <div  class="portfolio-item nature mix_all" data-cat="nature" >
-
-
-                        <img src="assets/img/portfolio/g.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                            <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview  btn btn-info" title="Image Title Here" href="assets/img/portfolio/g.jpg"> <i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ">
-
-                    <div  class="portfolio-item awesome mix_all" data-cat="awesome" >
-
-
-                        <img src="assets/img/portfolio/b.jpg" class="img-responsive " alt="" />
-                        <div class="overlay">
-                            <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info" title="Image Title Here" href="assets/img/portfolio/b.jpg"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ">
-
-                    <div  class="portfolio-item nature landscape mix_all" data-cat="nature landscape" >
-
-
-                        <img src="assets/img/portfolio/c.png" class="img-responsive " alt="" />
-                        <div class="overlay">
-                          <p>
-                                <span>
-                                Image Orinagal Size: 750x500
-                                </span>
-                               
-                                PROJECT TITLE HERE
-                            </p>
-                            <a class="preview btn btn-info" title="Image Title Here" href="assets/img/portfolio/c.png"><i class="fa fa-plus fa-2x"></i></a>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
-    </div>         
-     <!--JUST SECTION END-->
-     <div class="parallax-like">
-        <div class="overlay">
-
-       
-       <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 300+</strong> 
-                    <p>
-                        Clients
-                    </p>
-                </div>
-                </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 100+</strong> 
-                    <p>
-                        Offices
-                    </p>
-                </div>
-                </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 50000+</strong> 
-                    <p>
-                        Employees
-                    </p>
-                </div>
-                </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 500+</strong> 
-                    <p>
-                        Projects
-                    </p>
-                </div>
-                </div>
-            </div>
-           </div>
-             </div>
     </div>
-     <!-- PARALLAX LIKE SECTION END-->
-     <div class="container " >
-         <div class="row ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h1 class="head-line">Our Clients </h1>
-                <br />
-                </div>
-            </div>
-             <div class="row ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <hr />
-                 <div class="flexslider carousel">
-          <ul class="slides">
-            <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-            <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-              <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-              <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-              <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-          </ul>
-        </div>
-                <hr />
-                <br />
-                </div>
-            </div>
-         </div>
-     <!--CLIENT SECTION END-->
-     <div class="container " >
-             <div class="row">
-            <div class="col-lg-10 col-md-10 col-sm-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-12 set-div">
-                <div class="just-txt-div text-center">
-                    <h3><strong>-- Lorem ipsum dolor sit --</strong> </h3>
-                    <p>
-                         Lorem Lorem ipsum dolor sit amet <strong> Lorem ipsum dolor sit ametLorem </strong> ipsum dolor sit ametLorem 
-                ipsum dolor sit ametLorem ipsum dolor 
-                      <br /><br />
-                    </p>
-                      <a class="btn btn-info btn-lg" href="#">Read More Here</a>
-                    &nbsp;&nbsp;
-                    <a class="btn btn-success btn-lg" href="#">Download Now </a>
-                </div>
-               
-                </div>
-            </div>
-         </div>
-      <!--SET-DIV SECTION END-->
-   
+     <!-- AKHIR ISI -->
+     
    <div class="footer-sec">
          <div class="container">
         <div class="row">

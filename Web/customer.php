@@ -27,6 +27,13 @@
 </head>
 <body>
 
+<?php 
+session_start();
+if ($_SESSION['status']!="login") {
+    header("location:index.php?pesan=belum_login");
+}
+?>
+
  <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
@@ -97,6 +104,8 @@
                         <th class="tbl text-center">ID PENGGUNA</th>
                         <th class="tbl text-center">NAMA LENGKAP</th>
                         <th class="tbl text-center">NOMER TELEPON</th>
+                        <th class="tbl text-center">ALAMAT</th>
+                        <th class="tbl text-center">ORDER</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,7 +113,7 @@
                     <?php
                     include 'koneksi.php';
                     $sql = "SELECT * FROM pengguna";
-                    $hasil = mysqli_query($conn,$sql);
+                    $hasil = mysqli_query($koneksi,$sql);
                     $nomer = 1;
                     while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
                     ?>
@@ -114,6 +123,19 @@
                         <td><?php echo $data['id_pengguna']; ?></td>
                         <td><?php echo $data['nama_lengkap']; ?></td>
                         <td><?php echo $data['telepon']; ?></td>
+                        <td>
+                            <select name="alamat" id="Alamat" class="form" style="width: 100%;"  required>
+                                <option value="1"><?php echo $data['alamat1']; ?></option>
+                                <option value="2"><?php echo $data['alamat2']; ?></option>
+                                <option value="3"><?php echo $data['alamat3']; ?></option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <a href="detail_customer.php?id_pengguna=<?php echo $data['id_pengguna']; ?>">
+                            <input type = "button" value = "detail"></a>
+                            <a href="hapus_customer.php?id_pengguna=<?php echo $data['id_pengguna']; ?>">
+                            <input type = "button" value = "hapus"></a>
+                        </td>
                     </tr>
                     
                     <?php 
@@ -125,223 +147,53 @@
             </div>
         </div>
     </div>
-     <!-- TAG HOME SECTION END-->
-    <div class="just-sec">
-        
-
-        <div class="container">
-             
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="min-height:500px;">
-                <div class="alert alert-info">
-                    This is  an blank page which you can customize easily and for more free templates keep looking<a href="http://www.binarytheme.com/"  target="_blank" > binarytheme.com</a>.
-                   
-                      </div>
-            </div>
-           
-        </div>
-             
-    </div>
-    </div>         
      <!--JUST SECTION END-->
-      <div class="parallax-like">
-        <div class="overlay">
 
-       
-       <div class="container">
+     <div class="footer-sec">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 300+</strong> 
-                    <p>
-                        Clients
-                    </p>
-                </div>
-                </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 100+</strong> 
-                    <p>
-                        Offices
-                    </p>
-                </div>
-                </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 50000+</strong> 
-                    <p>
-                        Employees
-                    </p>
-                </div>
-                </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="just-txt-div">
-                  <strong> 500+</strong> 
-                    <p>
-                        Projects
-                    </p>
-                </div>
-                </div>
-            </div>
-           </div>
-             </div>
-    </div>
-     <!-- PARALLAX LIKE SECTION END-->
-     <div class="container " >
-         <div class="row ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h1 class="head-line">Our Clients </h1>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
+                <h3> <strong>CONTACT PERSON</strong> </h3>
                 <br />
-                </div>
-            </div>
-             <div class="row ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <hr />
-                 <div class="flexslider carousel">
-          <ul class="slides">
-            <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-            <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-              <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-              <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-              <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-  	    		 <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-               <li>
-  	    	    <img src="assets/img/client.jpg" />
-  	    		</li>
-          </ul>
-        </div>
-                <hr />
-                <br />
-                </div>
-            </div>
-         </div>
-     <!--CLIENT SECTION END-->
-     <div class="container " >
-             <div class="row">
-            <div class="col-lg-10 col-md-10 col-sm-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-12 set-div">
-                <div class="just-txt-div text-center">
-                    <h3><strong>-- Lorem ipsum dolor sit --</strong> </h3>
-                    <p>
-                         Lorem Lorem ipsum dolor sit amet <strong> Lorem ipsum dolor sit ametLorem </strong> ipsum dolor sit ametLorem 
-                ipsum dolor sit ametLorem ipsum dolor 
-                      <br /><br />
-                    </p>
-                      <a class="btn btn-info btn-lg" href="#">Read More Here</a>
-                    &nbsp;&nbsp;
-                    <a class="btn btn-success btn-lg" href="#">Download Now </a>
-                </div>
-               
-                </div>
-            </div>
-         </div>
-      <!--SET-DIV SECTION END-->
-   
-   <div class="footer-sec">
-         <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-
-              
-									<h3> <strong>ABOUT COMPANY</strong> </h3>
-									<p style="padding-right:50px;" >
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-									</p>
+                <a href="#" ><h4>WHATSAPP: 082331879753 </h4></a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
-               
-
-              
-										<h3> <strong>SOCIAL PRESENCE</strong> </h3>
-                We love to be social,Catch Us On
+                <h3> <strong>SOCIAL MEDIA</strong> </h3>
+                <br />
                 <a href="#" ><h4>FACEBOOK </h4></a>
-                   <a href="#" ><h4>TWITTER </h4></a>
-                 <a href="#" ><h4>LINKEDIN </h4></a>
-									
-                    
+                <a href="#" ><h4>TWITTER </h4></a>
+                <a href="#" ><h4>INSTAGRAM </h4></a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-            <h3> <strong>PHYSICAL LOCATION</strong> </h3>
-                Reach Us Below:
+                <h3> <strong>ALAMAT KANTOR</strong> </h3>
                 <br />
-                <h4>90/567, Raw Street Lane,</h4>
-                 <h4>United States of America,</h4>
-                 <h4>Pin: 309987-09</h4>
+                <h4>Jalan Menuju Kenangan indah no.33,</h4>
+                <h4>Talangsari, JEMBER,</h4>
+                <h4>INDONESIA</h4>
             </div>
         </div>
- <div class="row">
+        <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <hr />
                 <div style="text-align:right;padding:5px;">
-                    &copy;2014 yourdomain.com | <a href="http://www.binarytheme.com/" style="color:#fff;" target="_blank" >Designed By: Binarytheme.com</a>
-                </div>
+                &copy;2014 yourdomain.com | <a href="http://www.binarytheme.com/" style="color:#fff;" target="_blank" >Designed By: Binarytheme.com</a>
             </div>
+        </div>
     </div>
-    </div>
-       </div>
-     <!--FOOTER SECTION END-->
-      <!-- WE PUT SCRIPTS AT THE END TO LOAD PAGE FASTER-->
+</div>
+</div>
+<!--FOOTER SECTION END-->
+<!-- WE PUT SCRIPTS AT THE END TO LOAD PAGE FASTER-->
 <!--CORE SCRIPTS PLUGIN-->
-    <script src="assets/js/jquery-1.11.1.min.js"></script>
-     <!--BOOTSTRAP SCRIPTS PLUGIN-->
+<script src="assets/js/jquery-1.11.1.min.js"></script>
+<!--BOOTSTRAP SCRIPTS PLUGIN-->
 <script src="assets/js/bootstrap.js"></script>
-     <!--WOW SCRIPTS PLUGIN-->
-    <script src="assets/js/wow.js"></script>
-     <!--FLEXSLIDER SCRIPTS PLUGIN-->
-    <script src="assets/js/jquery.flexslider.js"></script>
-     <!--CUSTOM SCRIPTS -->
-    <script src="assets/js/custom.js"></script>
+<!--WOW SCRIPTS PLUGIN-->
+<script src="assets/js/wow.js"></script>
+<!--FLEXSLIDER SCRIPTS PLUGIN-->
+<script src="assets/js/jquery.flexslider.js"></script>
+<!--CUSTOM SCRIPTS -->
+<script src="assets/js/custom.js"></script>
 </body>
 
 </html>

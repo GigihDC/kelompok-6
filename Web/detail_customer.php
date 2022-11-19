@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-     <meta charset="utf-8" />
+      <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -48,7 +48,7 @@ if ($_SESSION['status']!="login") {
 
             </div>
             <div class="right-div">
-<strong>Support : </strong>  tRushMeBin@gmail.com
+<strong>Support : </strong>  info@yourdomain.com
             </div>
           
         </div>
@@ -60,13 +60,7 @@ if ($_SESSION['status']!="login") {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-left">
-                            <li><a href="home.php">HOME</a></li>
-                           
-                            <li><a href="transaksi.php">TRANSAKSI</a></li>
-                            <li><a href="laporan.php">LAPORAN</a></li>
-                            <li><a href="pickup.php" class="menu-top-active">PICKUP</a></li>
-                            <li><a href="customer.php">INFORMASI CUSTOMER</a></li>
-                            <li><a href="about.php">ABOUT US</a></li>
+                            <li><a href="customer.php">KEMBALI</a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,7 +78,7 @@ if ($_SESSION['status']!="login") {
                 <div class="txt-block">
 
               
-									<h1 class="head-line">PICKUP</h1>
+									<h1 class="head-line"> DETAIL INFORMASI CUSTOMER</h1>
 									
                       </div>
             </div>
@@ -93,53 +87,94 @@ if ($_SESSION['status']!="login") {
     </div>
     </div>
     <!-- BELOW SLIDESHOW SECTION END-->
-      <div class="container">
+    <div class="container">
         <div class="row">
-            <div>
-            </br></br>
-            <table border="1" class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th class="tbl text-center">No</th>
-                        <th class="tbl text-center">ID PENGANTARAN</th>
-                        <th class="tbl text-center">NAMA LENGKAP</th>
-                        <th class="tbl text-center">ALAMAT</th>
-                        <th class="tbl text-center">TANGGAL</th>
-                        <th class="tbl text-center">ORDER</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include 'koneksi.php';
-                    $sql = "SELECT * FROM pickup GROUP BY tanggal ASC;";
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            </br>
+            <?php
+            if (isset($_GET['pesan'])) {
+                if ($_GET['pesan'] == "kosong") {
+            ?>
+                    <div class="warning text-center">
+                        <?php echo "LU CHEATER YA!!!!"; ?>
+                    </div>
+            <?php
+                } 
+            }
+            ?>
+                </br></br>
+                <div>
+                    <form action="edit_detail_customer.php" method="POST">
+                
+                <?php
+                require ('koneksi.php');
+                $data = $_GET['id_pengguna'];
+                $sql = "SELECT * FROM `pengguna` WHERE id_pengguna = '$data'";
                     $hasil = mysqli_query($koneksi,$sql);
-                    $nomer = 1;
-                    while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){                        
+                    while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
                     ?>
+                    
                     <tr>
-                        <td class="no text-center"><?php echo $nomer++; ?></td>
-                        <td><?php echo $data['id_pengantaran']; ?></td>
-                        <td><?php echo $data['nama_lengkap']; ?></td>
-                        <td><?php echo $data['alamat']; ?></td>
-                        <td><?php echo $data['tanggal']; ?></td>
-                        <td>
-                            <a href="cek_pickup.php?id_pengantaran=<?php echo $data['id_pengantaran']; ?>">
-                            <input type = "button" value = "selesai"></a>
-                        </td>
+                        <div class="form-group">
+                            <label for="kode">ID PENGGUNA :</label>
+                            &ensp;&ensp;
+                            <input type="text" name ="kode" class="form" style="width: 60%;" 
+                            value="<?php echo $data['id_pengguna']; ?>" required DISABLED />
+                            <input type="hidden" name ="txt_kode" class="form" style="width: 1%;" 
+                            value="<?php echo $data['id_pengguna']; ?>" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">NAMA LENGKAP :</label>
+                            &ensp;
+                            <input type="text" name ="txt_nama" class="form" style="width: 60%;" 
+                            placeholder="Masukan nama lengkap, contoh: <?php echo $data['nama_lengkap']; ?>" required
+                            value="<?php echo $data['nama_lengkap']; ?>" >
+                        </div>
+                        <div class="form-group">
+                            <label for="telepon">NO HP :</label>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                            <input type="text" name ="txt_telepon" class="form" style="width: 60%;" 
+                            placeholder="Masukan nomer yang bisa dihubungi, contoh: 081*****" required
+                            value="<?php echo $data['telepon']; ?>" >
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat1">ALAMAT 1 :</label>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;
+                            <input type="text" name ="txt_alamat1" class="form" style="width: 60%;" 
+                            placeholder="Masukan alamat anda, contoh: <?php echo $data['alamat1']; ?>" required
+                            value="<?php echo $data['alamat1']; ?>" >
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat2">ALAMAT 2 :</label>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;
+                            <input type="text" name ="txt_alamat2" class="form" style="width: 60%;" 
+                            placeholder="OPTIONAL Masukan alamat anda, contoh: <?php echo $data['alamat2']; ?>"
+                            value="<?php echo $data['alamat2']; ?>" >
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat3">ALAMAT 3 :</label>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;
+                            <input type="text" name ="txt_alamat3" class="form" style="width: 60%;" 
+                            placeholder="OPTIONAL Masukan alamat anda, contoh: <?php echo $data['alamat3']; ?>" required
+                            value="<?php echo $data['alamat3']; ?>" >
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
                     </tr>
+                    
                     <?php 
                     }
-                    ?>
+                ?>
                 
-                </tbody>
-            </table>
-            </br></br><hr>
+                    </form>
+                
+                </div>
+                <br /><hr />
             </div>
         </div>
     </div>
-     <!--SET-DIV SECTION END-->
-   
-   <div class="footer-sec">
+     <!--JUST SECTION END-->
+
+     <div class="footer-sec">
     <div class="container">
         <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">

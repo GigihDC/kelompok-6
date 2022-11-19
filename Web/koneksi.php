@@ -1,15 +1,7 @@
-<?php
- $servername = "localhost";
- $username = "root";
- $password = "";
- $dbname = "rushbin";
- 
- $conn = mysqli_connect($servername, $username, $password, $dbname);
- 
- if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
- } 
-//  else {
-//     echo "Berhasil";
-//  } 
+<?php 
+$koneksi = mysqli_connect("localhost","root","","rushbin");
+// Check connection
+if (mysqli_connect_errno()){
+echo "Koneksi database gagal : " . mysqli_connect_error();
+}
 ?>

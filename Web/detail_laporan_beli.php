@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
       <meta charset="utf-8" />
@@ -43,12 +43,12 @@ if ($_SESSION['status']!="login") {
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="home.php">
-                <img src="assets/img/portfolio/logo.png" />
+                    <img src="assets/img/portfolio/logo.png" />
                 </a>
 
             </div>
             <div class="right-div">
-<strong>Support : </strong>  tRushMeBin@gmail.com
+<strong>Support : </strong>  info@yourdomain.com
             </div>
           
         </div>
@@ -60,13 +60,7 @@ if ($_SESSION['status']!="login") {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-left">
-                            <li><a href="home.php">HOME</a></li>
-                           
-                            <li><a href="transaksi.php">TRANSAKSI</a></li>
-                            <li><a href="laporan.php" class="menu-top-active">LAPORAN</a></li>
-                            <li><a href="pickup.php">PICKUP</a></li>
-                            <li><a href="customer.php">INFORMASI CUSTOMER</a></li>
-                            <li><a href="about.php">ABOUT US</a></li>
+                            <li><a href="laporan.php">KEMBALI</a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,7 +78,7 @@ if ($_SESSION['status']!="login") {
                 <div class="txt-block">
 
               
-									<h1 class="head-line">LAPORAN</h1>
+									<h1 class="head-line"> DETAIL LAPORAN TRANSAKSI PEMBELIAN</h1>
 									
                       </div>
             </div>
@@ -93,85 +87,26 @@ if ($_SESSION['status']!="login") {
     </div>
     </div>
     <!-- BELOW SLIDESHOW SECTION END-->
-      <div class="container">
-        
-
-     <div class="col-md-9" style="width: 100%;">
-        <div class="card">
-            <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">LAPORAN JUAL</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">LAPORAN BELI</a></li>
-                </ul>
-            </div>
-        </div>
-            </div>
-            <div class="card-body">
-                <div class="tab-content">
-                  <div class="active tab-pane" id="activity">
-                    <div>
-                        </br></br>
-                        <table border="1" class="table table-bordered">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th class="tbl text-center">No</th>
-                                    <th class="tbl text-center">KODE TRANSAKSI</th>
-                                    <th class="tbl text-center">TANGGAL</th>
-                                    <th class="tbl text-center">WAKTU</th>
-                                    <th class="tbl text-center">NAMA PEGAWAI</th>
-                                    <th class="tbl text-center">ORDER</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php
-                            include 'koneksi.php';
-                            $sql = "SELECT * FROM transaksi_jual";
-                            $hasil = mysqli_query($koneksi,$sql);
-                            $nomer = 1;
-                            while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
-                            ?>
-                            
-                            <tr>
-                                <td class="no text-center"><?php echo $nomer++; ?></td>
-                                <td><?php echo $data['kode_transaksi']; ?></td>
-                                <td><?php echo $data['tanggal']; ?></td>
-                                <td><?php echo $data['waktu']; ?></td>
-                                <td><?php echo $data['nama_pegawai']; ?></td>
-                                <td class="text-center">
-                                    <a href="detail_laporan_jual.php?kode_transaksi=<?php echo $data['kode_transaksi']; ?>">
-                                    <input type = "button" value = "detail"></a>
-                                </td>
-                            </tr>
-                            
-                            <?php 
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                        </br></br><hr>
-                    </div>
-                </div>
-                  <div class="tab-pane" id="timeline">
-                  <div>
+    <div class="container">
+        <div class="row">
+            <div>
                   </br></br>
                     <table border="1" class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="tbl text-center">No</th>
                                     <th class="tbl text-center">KODE TRANSAKSI</th>
-                                    <th class="tbl text-center">TANGGAL</th>
-                                    <th class="tbl text-center">WAKTU</th>
-                                    <th class="tbl text-center">NAMA PEGAWAI</th>
-                                    <th class="tbl text-center">TOTAL POINT</th>
-                                    <th class="tbl text-center">ORDER</th>
+                                    <th class="tbl text-center">NAMA SAMPAH</th>
+                                    <th class="tbl text-center">JUMLAH SAMPAH</th>
+                                    <th class="tbl text-center">POINT</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                             <?php
                             include 'koneksi.php';
-                            $sql = "SELECT * FROM transaksi_beli";
+                            $data = $_GET['kode_transaksi'];
+                            $sql = "SELECT * FROM laporan_beli where kode_transaksi = '$data'";
                             $hasil = mysqli_query($koneksi,$sql);
                             $nomer = 1;
                             while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
@@ -180,14 +115,9 @@ if ($_SESSION['status']!="login") {
                             <tr>
                                 <td class="no text-center"><?php echo $nomer++; ?></td>
                                 <td><?php echo $data['kode_transaksi']; ?></td>
-                                <td><?php echo $data['tanggal']; ?></td>
-                                <td><?php echo $data['waktu']; ?></td>
-                                <td><?php echo $data['nama_pegawai']; ?></td>
-                                <td class="text-center"><?php echo $data['total_point']; ?></td>
-                                <td class="text-center">
-                                    <a href="detail_laporan_beli.php?kode_transaksi=<?php echo $data['kode_transaksi']; ?>">
-                                    <input type = "button" value = "detail"></a>
-                                </td>
+                                <td><?php echo $data['nama_sampah']; ?></td>
+                                <td><?php echo $data['jumlah_sampah']; ?></td>
+                                <td><?php echo $data['point']; ?></td>
                             </tr>
                             
                             <?php 
@@ -196,14 +126,10 @@ if ($_SESSION['status']!="login") {
                             </tbody>
                         </table>
                         </br></br><hr>
-                </div>
-                  </div>
-                </div>
-              </div>
             </div>
         </div>
-          </div>
-     <!-- TAG HOME SECTION END-->
+    </div>
+     <!--JUST SECTION END-->
 
      <div class="footer-sec">
     <div class="container">
