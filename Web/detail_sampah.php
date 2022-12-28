@@ -62,8 +62,7 @@ if ($_SESSION['status']!="login") {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-left">
-                            <?php $url = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : ''; ?>
-                            <li><a href="<?=$url?>">KEMBALI</a></li>
+                            <li><a href="home.php">KEMBALI</a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,7 +80,7 @@ if ($_SESSION['status']!="login") {
                     <div class="txt-block">
 
 
-                        <h1 class="head-line"> DETAIL LAPORAN TRANSAKSI PEMBELIAN</h1>
+                        <h1 class="head-line"> DETAIL INFORMASI SAMPAH</h1>
 
                     </div>
                 </div>
@@ -92,44 +91,86 @@ if ($_SESSION['status']!="login") {
     <!-- BELOW SLIDESHOW SECTION END-->
     <div class="container">
         <div class="row">
-            <div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                </br>
+                <?php
+            if (isset($_GET['pesan'])) {
+                if ($_GET['pesan'] == "kosong") {
+            ?>
+                <div class="warning text-center">
+                    <?php echo "LU CHEATER YA!!!!"; ?>
+                </div>
+                <?php
+                } 
+            }
+            ?>
                 </br></br>
-                <table border="1" class="table table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th class="tbl text-center">No</th>
-                            <th class="tbl text-center">KODE TRANSAKSI</th>
-                            <th class="tbl text-center">NAMA SAMPAH</th>
-                            <th class="tbl text-center">JUMLAH SAMPAH</th>
-                            <th class="tbl text-center">POINT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div>
+                    <form action="edit_detail_sampah.php" method="POST">
 
                         <?php
-                            include 'koneksi.php';
-                            $data = $_GET['kode_transaksi'];
-                            $sql = "SELECT * FROM laporan_beli where kode_transaksi = '$data'";
-                            $hasil = mysqli_query($koneksi,$sql);
-                            $nomer = 1;
-                            while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
-                            ?>
+                require ('koneksi.php');
+                $data = $_GET['id_sampah'];
+                $sql = "SELECT * FROM daftar_sampah WHERE id_sampah = '$data'";
+                    $hasil = mysqli_query($koneksi,$sql);
+                    while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
+                    ?>
 
                         <tr>
-                            <td class="no text-center"><?php echo $nomer++; ?></td>
-                            <td><?php echo $data['kode_transaksi']; ?></td>
-                            <td><?php echo $data['nama_sampah']; ?></td>
-                            <td><?php echo $data['jumlah_sampah']; ?></td>
-                            <td><?php echo $data['point']; ?></td>
+                            <div class="form-group">
+                                <label for="kode">ID SAMPAH &ensp;&ensp;&ensp;&ensp; :</label>
+                                &ensp;
+                                <input type="text" readonly="readonly" name="txt_id" class="form" style="width: 85%;"
+                                    value="<?php echo $data['id_sampah']; ?>" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="nama">NAMA SAMPAH &ensp; :</label>
+                                &ensp;
+                                <input type="text" name="txt_nama" class="form" style="width: 85%;"
+                                    placeholder="Masukan nama sampah, contoh: <?php echo $data['nama_sampah']; ?>"
+                                    required value="<?php echo $data['nama_sampah']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="jenis">JENIS SAMPAH &ensp; :</label>
+                                &ensp;
+                                <select name="txt_jenis" id="txt_jenis" class="form" style="width: 85%;" required>
+                                    <option value="<?php echo $data['jenis_sampah']; ?>">
+                                        <?php echo $data['jenis_sampah']; ?></option>
+                                    <option value="sampah plastik">Sampah Plastik</option>
+                                    <option value="sampah kaca">Sampah Kaca</option>
+                                    <option value="sampah kertas">Sampah Kertas</option>
+                                    <option value="sampah kayu">Sampah Kayu</option>
+                                    <option value="sampah besi">Sampah Besi</option>
+                                    <option value="sampah kain">Sampah Kain</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="point">POINT &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; :</label>
+                                &ensp;
+                                <input type="text" name="txt_point" class="form" style="width: 85%;"
+                                    placeholder="Masukan point sampah, contoh: <?php echo $data['point']; ?>" required
+                                    value="<?php echo $data['point']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="harga">HARGA JUAL &ensp;&ensp;&ensp; :</label>
+                                &ensp;
+                                <input type="text" name="txt_harga" class="form" style="width: 85%;"
+                                    placeholder="Masukan harga sampah perkilo, contoh: <?php echo $data['harga_jual']; ?>"
+                                    required value="<?php echo $data['harga_jual']; ?>">
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success" name="submit" style="margin-left: 400px; width: 10%; height: 40px;">SIMPAN</button>
                         </tr>
 
                         <?php 
-                            }
-                            ?>
-                    </tbody>
-                </table>
-                </br></br>
-                <hr>
+                    }
+                ?>
+
+                    </form>
+
+                </div>
+                <br />
+                <hr />
             </div>
         </div>
     </div>

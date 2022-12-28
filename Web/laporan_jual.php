@@ -68,7 +68,7 @@ if ($_SESSION['status']!="login") {
                             <li><a href="home.php">HOME</a></li>
 
                             <li><a href="transaksi.php">TRANSAKSI</a></li>
-                            <li><a href="laporan.php" class="menu-top-active">LAPORAN</a></li>
+                            <li><a href="laporan_jual.php" class="menu-top-active">LAPORAN</a></li>
                             <li><a href="pickup.php">PICKUP</a></li>
                             <li><a href="customer.php">INFORMASI CUSTOMER</a></li>
                             <li><a href="about.php">ABOUT US</a></li>
@@ -105,8 +105,8 @@ if ($_SESSION['status']!="login") {
             <div class="col-md-9" style="width: 100%;">
                 <div class="navbar-collapse collapse ">
                     <ul id="menu-top" class="nav navbar-nav navbar-left">
-                        <li><a href="laporan.php" class="menu-top-active">LAPORAN BELI</a></li>
-                        <li><a href="laporan_jual.php">LAPORAN JUAL</a></li>
+                        <li><a href="laporan.php">LAPORAN BELI</a></li>
+                        <li><a href="laporan_jual.php" class="menu-top-active">LAPORAN JUAL</a></li>
                     </ul>
                 </div>
             </div>
@@ -122,17 +122,15 @@ if ($_SESSION['status']!="login") {
                             <div class="form-group">
                                 <label for="sebelum">Dari Tanggal :</label> &ensp;
                                 <input type="date" name="sebelum" id="sebelum" class="form" style="width: 35%;"
-                                    required>
-                                &ensp;&ensp;
+                                    required> &ensp;&ensp;
                                 <label for="sesudah"> Sampai tanggal :</label> &ensp;
                                 <input type="date" name="sesudah" id="sesudah" class="form" style="width: 35%;"
-                                    required>
-                                &ensp;&ensp;
+                                    required> &ensp;&ensp;
                                 <input type="submit" class="btn btn-primary" name="filter" value="cari"
                                     style="width: 5%; height: 40px; font-weight: 900;">
                             </div>
                             </br></br>
-                            <table border="1" class="display" id="table2" style="width: 100%;">
+                            <table border="1" class="display" id="table1" style="width: 100%;">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th class="tbl text-center">No</th>
@@ -140,8 +138,7 @@ if ($_SESSION['status']!="login") {
                                         <th class="tbl text-center">TANGGAL</th>
                                         <th class="tbl text-center">WAKTU</th>
                                         <th class="tbl text-center">NAMA PEGAWAI</th>
-                                        <th class="tbl text-center">ID PELANGGAN</th>
-                                        <th class="tbl text-center">TOTAL POINT</th>
+                                        <th class="tbl text-center">TOTAL TRANSAKSI</th>
                                         <th class="tbl text-center">ORDER</th>
                                     </tr>
                                 </thead>
@@ -153,9 +150,9 @@ if ($_SESSION['status']!="login") {
                             if (isset($_POST['filter'])) {
                                 $sebelum = $_POST['sebelum'];
                                 $sesudah = $_POST['sesudah'];
-                                $sql = "SELECT * FROM transaksi_beli WHERE tanggal BETWEEN '$sebelum' AND '$sesudah' ORDER BY kode_transaksi DESC";
+                                $sql = "SELECT * FROM transaksi_jual WHERE tanggal BETWEEN '$sebelum' AND '$sesudah' ORDER BY kode_transaksi DESC";
                             } else {
-                                $sql = "SELECT * FROM transaksi_beli ORDER BY kode_transaksi DESC";
+                                $sql = "SELECT * FROM transaksi_jual ORDER BY kode_transaksi DESC";
                             }
                             $hasil = mysqli_query($koneksi,$sql);
                             while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
@@ -167,11 +164,10 @@ if ($_SESSION['status']!="login") {
                                         <td><?php echo $data['tanggal']; ?></td>
                                         <td><?php echo $data['waktu']; ?></td>
                                         <td><?php echo $data['nama_lengkap']; ?></td>
-                                        <td><?php echo $data['id_pengguna']; ?></td>
-                                        <td class="text_center"><?php echo $data['total_point']; ?></td>
+                                        <td><?php echo $data['total_pembelian']; ?></td>
                                         <td class="text-center">
                                             <a
-                                                href="detail_laporan_beli.php?kode_transaksi=<?php echo $data['kode_transaksi']; ?>">
+                                                href="detail_laporan_jual.php?kode_transaksi=<?php echo $data['kode_transaksi']; ?>">
                                                 <input type="button" class="btn btn-info btn-lg" value="Detail"></a>
                                         </td>
                                     </tr>

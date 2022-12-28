@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -25,9 +25,6 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css' />
-    <!-- datatable style -->
-    <link rel="stylesheet" type="text/css" href="assets/js/datatabel/media/css/jquery.dataTables.css">
-
 </head>
 
 <body>
@@ -53,7 +50,7 @@ if ($_SESSION['status']!="login") {
 
             </div>
             <div class="right-div">
-                <strong>Support : </strong> tRushMeBin@gmail.com
+                <strong>Support : </strong> info@yourdomain.com
             </div>
 
         </div>
@@ -65,14 +62,7 @@ if ($_SESSION['status']!="login") {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-left">
-                            <li><a href="home.php">HOME</a></li>
-
-                            <li><a href="transaksi.php">TRANSAKSI</a></li>
-                            <li><a href="laporan.php">LAPORAN</a></li>
-                            <li><a href="pickup.php" class="menu-top-active">PICKUP</a></li>
-                            <li><a href="customer.php">INFORMASI CUSTOMER</a></li>
-                            <li><a href="about.php">ABOUT US</a></li>
-                            <li><a href="logout.php">LOGOUT</a></li>
+                            <li><a href="home.php">KEMBALI</a></li>
                         </ul>
                     </div>
                 </div>
@@ -90,7 +80,7 @@ if ($_SESSION['status']!="login") {
                     <div class="txt-block">
 
 
-                        <h1 class="head-line">PICKUP</h1>
+                        <h1 class="head-line">TAMBAH SAMPAH</h1>
 
                     </div>
                 </div>
@@ -101,81 +91,65 @@ if ($_SESSION['status']!="login") {
     <!-- BELOW SLIDESHOW SECTION END-->
     <div class="container">
         <div class="row">
-            <div>
-                </br>
-
-                <div class="warning text-center"></div>
-                <?php 
-                                if (isset($_GET['pesan'])) {
-                                    if ($_GET['pesan'] == "status_complete-succesfull") {
-                                ?>
-                <div class="warning text-center" style="color: green; font-weight: 900;">
-                    <?php echo "STATUS BERHASIL DI UBAH KE SELESAI"; ?>
-                </div>
-                <?php
-                                    } elseif ($_GET['pesan'] == "status_notcomplete-succesfull") {
-                                        ?>
-                        <div class="warning text-center" style="color: green; font-weight: 900;">
-                            <?php echo "STATUS BERHASIL DI UBAH KE BELUM SELESAI"; ?>
-                        </div>
-                        <?php
-                                    }
-                                }
-                                ?>
-
-                </br>
-                <table border="1" class="table table-bordered" style="width: 100%;">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th class="tbl text-center">No</th>
-                            <th class="tbl text-center">ID PENGANTARAN</th>
-                            <th class="tbl text-center">NAMA LENGKAP</th>
-                            <th class="tbl text-center">ALAMAT</th>
-                            <th class="tbl text-center">TANGGAL</th>
-                            <th class="tbl text-center">ORDER</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                    include 'koneksi.php';
-                    $sql = "SELECT * FROM pickup ORDER BY status ASC;";
-                    $hasil = mysqli_query($koneksi,$sql);
-                    $nomer = 1;
-                    while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){                        
-                    ?>
-                        <tr>
-                            <td class="no text-center"><?php echo $nomer++; ?></td>
-                            <td><?php echo $data['id_pengantaran']; ?></td>
-                            <td><?php echo $data['nama_lengkap']; ?></td>
-                            <td><?php echo $data['alamat']; ?></td>
-                            <td><?php echo $data['tanggal']; ?></td>
-                            <?php
-                        if ($data['status']==1) {  
-                        ?>
-                            <td class="tbl text-center">
-                                <a href="cek_pickup_selesai.php?id_pengantaran=<?php echo $data['id_pengantaran']; ?>">
-                                    <input type="button" class="btn btn-primary" value="Selesai" style="width: 80%;"></a>
-                            </td>
-                            <?php
-                        } elseif ($data['status']==2) {
-                            ?>
-                            <td class="tbl text-center">
-                                <a href="cek_pickup_batal.php?id_pengantaran=<?php echo $data['id_pengantaran']; ?>">
-                                    <input type="button" class="btn btn-danger" value="Batal" style="width: 80%;"></a>
-                            </td>
-                            <?php
-                        }
-                        ?>
-
-                        </tr>
-                        <?php 
-                    }
-                    ?>
-
-                    </tbody>
-                </table>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </br></br>
-                <hr>
+                <div>
+                    <form action="tambah_sampah.php" method="POST">
+                        <input type="hidden" name="id_sampah" id="id_sampah" readonly="readonly"
+                            class="form-control text-center" value="<?php
+                                    include 'koneksi.php';
+                                    $query = mysqli_query($koneksi, "SELECT max(id_sampah) as kodeTerbesar FROM daftar_sampah");
+                                    $data = mysqli_fetch_array($query);
+                                    $idsampah = $data['kodeTerbesar'];
+                                    $urutan = (int) substr($idsampah, 4, 4);
+                                    $urutan++;
+                                    $huruf = "SP-";
+                                    $idsampah = $huruf . sprintf("%04s", $urutan);
+                                    echo $idsampah;
+                                    if (isset($_POST['kodeTerbesar'])) {
+                                        $idsampah=$_POST['kodeTerbesar'];
+                                    }
+                                    ?>" style="width: 10%; position: absolute; right: 340px;">
+                        <tr>
+                            <div class="form-group">
+                                <label for="nama">NAMA SAMPAH &ensp; :</label>
+                                &ensp;
+                                <input type="text" name="txt_nama" class="form" style="width: 85%;"
+                                    placeholder="Masukan nama sampah, contoh: botol aqua" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="jenis">JENIS SAMPAH &ensp;&ensp; :</label>
+                                &ensp;
+                                <select name="txt_jenis" id="txt_jenis" class="form" style="width: 85%;" required>
+                                    <option value="">- Pilih Jenis Sampah -</option>
+                                    <option value="sampah plastik">Sampah Plastik</option>
+                                    <option value="sampah kaca">Sampah Kaca</option>
+                                    <option value="sampah kertas">Sampah Kertas</option>
+                                    <option value="sampah kayu">Sampah Kayu</option>
+                                    <option value="sampah besi">Sampah Besi</option>
+                                    <option value="sampah kain">Sampah Kain</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama">POINT &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; :</label>
+                                &ensp;
+                                <input type="text" name="txt_point" class="form" style="width: 85%;"
+                                    placeholder="Masukan point sampah, contoh: 10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="harga">HARGA JUAL &ensp;&ensp;&ensp; :</label>
+                                &ensp;
+                                <input type="text" name="txt_harga" class="form" style="width: 85%;"
+                                    placeholder="Masukan harga sampah perkilo, contoh: 10000" required>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success" name="submit" style="margin-left: 400px; width: 10%; height: 40px;">SIMPAN</button>
+                        </tr>
+                    </form>
+
+                </div>
+                <br />
+                <hr />
             </div>
         </div>
     </div>
@@ -235,30 +209,6 @@ if ($_SESSION['status']!="login") {
     <script src="assets/js/jquery.flexslider.js"></script>
     <!--CUSTOM SCRIPTS -->
     <script src="assets/js/custom.js"></script>
-    <!-- jquery -->
-    <script src="assets/js/jquery-3.1.0.min.js"></script>
-    <!-- jquery datatable -->
-    <script type="text/javascript" charset="utf8" src="assets/js/datatabel/media/js/jquery.dataTables.js">
-    </script>
-
-    <!-- fungsi datatable -->
-    <script>
-        $(document).ready(function () {
-            $('#table1').DataTable({
-                "pagingType": "full_numbers",
-                "info": false,
-                "columnDefs": [{
-                        targets: [0],
-                        orderData: [0, 1],
-                    },
-                    {
-                        targets: [4],
-                        orderData: [4, 0],
-                    },
-                ],
-            });
-        });
-    </script>
 </body>
 
 </html>

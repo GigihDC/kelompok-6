@@ -64,7 +64,7 @@ if ($_SESSION['status']!="login") {
                         <ul id="menu-top" class="nav navbar-nav navbar-left">
                             <li><a href="home.php">HOME</a></li>
 
-                            <li><a href="transaksi.php" class="menu-top-active">TRANSAKSI</a></li>
+                            <li><a href="transaksi_jual.php" class="menu-top-active">TRANSAKSI</a></li>
                             <li><a href="laporan.php">LAPORAN</a></li>
                             <li><a href="pickup.php">PICKUP</a></li>
                             <li><a href="customer.php">INFORMASI CUSTOMER</a></li>
@@ -101,8 +101,8 @@ if ($_SESSION['status']!="login") {
             <div class="col-md-9" style="width: 100%;">
                 <div class="navbar-collapse collapse ">
                     <ul id="menu-top" class="nav navbar-nav navbar-left">
-                        <li><a href="transaksi.php" class="menu-top-active">TRANSAKSI BELI</a></li>
-                        <li><a href="transaksi_jual.php">TRANSAKSI JUAL</a></li>
+                        <li><a href="transaksi.php">TRANSAKSI BELI</a></li>
+                        <li><a href="transaksi_jual.php" class="menu-top-active">TRANSAKSI JUAL</a></li>
                     </ul>
                 </div>
             </div>
@@ -113,18 +113,18 @@ if ($_SESSION['status']!="login") {
             <div>
                 <div>
                     <br>
-                    <form action="cek_transaksi_beli.php" method="POST">
-                        <div class="form">
-                            <input type="hidden" name="tgl" id="tgl" readonly="readonly"
+                    <form action="cek_transaksi_jual.php" method="POST">
+                        <div class="form-group">
+                            <input type="hidden" name="tanggal" id="tanggal" readonly="readonly"
                                 class="form-control text-center" value="<?php echo date("Y-m-d");?>"
                                 style="width: 10%; position: absolute; right: 10px;">
-                            <input type="hidden" name="jam" id="jam" readonly="readonly"
+                            <input type="hidden" name="waktu" id="waktu" readonly="readonly"
                                 class="form-control text-center" value="<?php echo date("H:i:s");?>"
                                 style="width: 10%; position: absolute; right: 170px;">
-                            <input type="hidden" name="kode_transaksi" id="kode_transaksi" readonly="readonly"
+                            <input type="hidden" name="transaksi" id="transaksi" readonly="readonly"
                                 class="form-control text-center" value="<?php
                                     include 'koneksi.php';
-                                    $query = mysqli_query($koneksi, "SELECT max(kode_transaksi) as kodeTerbesar FROM transaksi_beli");
+                                    $query = mysqli_query($koneksi, "SELECT max(kode_transaksi) as kodeTerbesar FROM transaksi_jual");
                                     $data = mysqli_fetch_array($query);
                                     $kodeBarang = $data['kodeTerbesar'];
                                     $urutan = (int) substr($kodeBarang, 5, 5);
@@ -136,7 +136,6 @@ if ($_SESSION['status']!="login") {
                                         $kodeBarang=$_POST['kodeTerbesar'];
                                     }
                                     ?>" style="width: 10%; position: absolute; right: 340px;">
-
                         </div>
                         <br><br>
                         <div class="form-group">
@@ -163,8 +162,8 @@ if ($_SESSION['status']!="login") {
                                         <th class="tbl text-center">ID SAMPAH</th>
                                         <th class="tbl text-center">NAMA SAMPAH</th>
                                         <th class="tbl text-center">TOTAL SAMPAH</th>
-                                        <th class="tbl text-center">POINT</th>
-                                        <th class="tbl text-center">TOTAL</th>
+                                        <th class="tbl text-center">HARGA JUAL</th>
+                                        <th class="tbl text-center">TOTAL HARGA</th>
                                         <th class="tbl text-center">ORDER</th>
                                     </tr>
                                 </thead>
@@ -172,8 +171,7 @@ if ($_SESSION['status']!="login") {
 
                                     <?php
                             include 'koneksi.php';
-                            $sql = "SELECT * FROM laporan_beli where kode_transaksi = '$kodeBarang'";
-                            $hasil = mysqli_query($koneksi,$sql);
+                            $hasil = mysqli_query($koneksi,"SELECT * FROM laporan_jual where kode_transaksi = '$kodeBarang'");
                             $nomer = 1;
                             while($data = mysqli_fetch_array($hasil,MYSQLI_ASSOC)){
                             ?>
@@ -183,12 +181,12 @@ if ($_SESSION['status']!="login") {
                                         <td><?php echo $data['id_sampah']; ?></td>
                                         <td><?php echo $data['nama_sampah']; ?></td>
                                         <td><?php echo $data['jumlah_sampah']; ?></td>
-                                        <td><?php echo $data['point'] / $data['jumlah_sampah']; ?></td>
+                                        <td><?php echo $data['total'] / $data['jumlah_sampah']; ?></td>
                                         <td class="text-center">
-                                            <?php echo $data['point']; ?></td>
+                                            <?php echo $data['total']; ?></td>
                                         <td class="text-center">
                                             <a
-                                                href="hapus_transaksi_beli.php?id_sampah=<?php echo $data['id_sampah']; ?>&quantity=<?php echo $data['jumlah_sampah']; ?>&kode_transaksi=<?php echo $data['kode_transaksi']; ?>">
+                                                href="hapus_transaksi_jual.php?id_sampah=<?php echo $data['id_sampah']; ?>&quantity=<?php echo $data['jumlah_sampah']; ?>&kode_transaksi=<?php echo $data['kode_transaksi']; ?>">
                                                 <input type="button" class="btn btn-danger" value="Batal"></a>
                                         </td>
                                     </tr>
@@ -200,21 +198,22 @@ if ($_SESSION['status']!="login") {
                             </table>
                         </div>
                     </form>
-                    <form action="confirm_transaksi_beli.php" method="POST">
-                        <div class="form">
+                    <div>
+                        <form action="confirm_transaksi_jual.php" method="POST">
+                            <div class="form-group">
                             <input type="hidden" name="tgl" id="tgl" readonly="readonly"
                                 class="form-control text-center" value="<?php date_default_timezone_set("Asia/Jakarta"); 
                                 echo date("Y-m-d");?>" style="width: 10%; position: absolute; right: 10px;">
                             <input type="hidden" name="jam" id="jam" readonly="readonly"
                                 class="form-control text-center" value="<?php date_default_timezone_set("Asia/Jakarta");
                                 echo date("h:i:s");?>" style="width: 10%; position: absolute; right: 170px;">
-                            <input type="hidden" name="pegawai" id="pegawai" readonly="readonly"
-                                class="form-control text-center" value="<?php echo $_SESSION['nama_lengkap']; ?>"
-                                style="width: 10%; position: absolute; right: 170px;">
-                            <input type="hidden" name="kode_transaksi" id="kode_transaksi" readonly="readonly"
+                                <input type="hidden" name="pegawai" id="pegawai" readonly="readonly"
+                                    class="form-control text-center" value="<?php echo $_SESSION['nama_lengkap']; ?>"
+                                    style="width: 10%; position: absolute; right: 170px;">
+                                    <input type="hidden" name="kode_transaksi" id="kode_transaksi" readonly="readonly"
                                 class="form-control text-center" value="<?php
                                     include 'koneksi.php';
-                                    $query = mysqli_query($koneksi, "SELECT max(kode_transaksi) as kodeTerbesar FROM transaksi_beli");
+                                    $query = mysqli_query($koneksi, "SELECT max(kode_transaksi) as kodeTerbesar FROM transaksi_jual");
                                     $data = mysqli_fetch_array($query);
                                     $kodeBarang = $data['kodeTerbesar'];
                                     $urutan = (int) substr($kodeBarang, 5, 5);
@@ -229,7 +228,7 @@ if ($_SESSION['status']!="login") {
                             <input type="hidden" name="grand" id="grand" readonly="readonly"
                                 class="form-control text-center" value="<?php
                                         include 'koneksi.php';
-                                        $query = mysqli_query($koneksi, "SELECT SUM(point) as grand FROM laporan_beli WHERE kode_transaksi = '$kodeBarang'");
+                                        $query = mysqli_query($koneksi, "SELECT SUM(total) as grand FROM laporan_jual WHERE kode_transaksi = '$kodeBarang'");
                                         $data = mysqli_fetch_array($query);
                                         $grand = $data['grand'];
                                         echo $grand;
@@ -237,14 +236,6 @@ if ($_SESSION['status']!="login") {
                                             $kodeBarang=$_POST['grand'];
                                         }
                                         ?>" style="width: 10%; position: absolute; right: 340px;">
-
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <label for="pelanggan">ID Pelanggan :</label>
-                            &ensp;&ensp;
-                            <input type="text" name="pelanggan" id="pelanggan" class="form" style="width: 78%;"
-                                placeholder="Masukan id pelanggan" required>
                         </div>
                         <div class="form-group">
                         <br>
@@ -257,6 +248,7 @@ if ($_SESSION['status']!="login") {
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!--JUST SECTION END-->
 

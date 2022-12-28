@@ -19,7 +19,7 @@
     <!-- FLEXSLIDER STYLE  -->
     <link href="assets/css/flexslider.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/style copy.css" rel="stylesheet" />
     <!-- GOOGLE FONTS  -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
      <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -68,6 +68,7 @@ if ($_SESSION['status']!="login") {
                             <li><a href="pickup.php">PICKUP</a></li>
                             <li><a href="customer.php">INFORMASI CUSTOMER</a></li>
                             <li><a href="about.php" class="menu-top-active">ABOUT US</a></li>
+                            <li><a href="logout.php">LOGOUT</a></li>
                         </ul>
                     </div>
                 </div>
@@ -163,7 +164,7 @@ if ($_SESSION['status']!="login") {
                 <div class="just-txt-div">
 
 									<p >
-										Lorem ipsum dolor sit amet, <strong> consectetur adipiscing elit.</strong> Mauris sagittis felis dolor vitae.
+										<strong>RUSHBIN ETERPRISE</strong> merupakan perusahan yang bergerak di bidang lingkungan hidup.
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
                                         Lorem ipsum dolor sit amet, consectetur <strong> consectetur adipiscing elit.</strong>  felis dolor vitae.
@@ -180,29 +181,37 @@ if ($_SESSION['status']!="login") {
             </div>
             <div class="col-lg-6 col-md-6 col-sm-46 col-xs-12">
                  <div class="just-txt-div">
-                     <img src="assets/img/side.jpg" class="img-responsive" />
+                     <img src="assets/img/side1.png" class="img-responsive" />
                 
                      </div>
             </div>
         </div>
     </div>
-    </div>         
-     <!--SET-DIV SECTION END-->
-   
-   <div class="footer-sec">
+    </div>
+    <!--JUST SECTION END-->
+
+<div class="footer-sec">
     <div class="container">
         <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
                 <h3> <strong>CONTACT PERSON</strong> </h3>
                 <br />
-                <a href="#" ><h4>WHATSAPP: 082331879753 </h4></a>
+                <a href="http://www.whatsapp.com/">
+                    <h4>WHATSAPP: 082331879753 </h4>
+                </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
                 <h3> <strong>SOCIAL MEDIA</strong> </h3>
                 <br />
-                <a href="#" ><h4>FACEBOOK </h4></a>
-                <a href="#" ><h4>TWITTER </h4></a>
-                <a href="#" ><h4>INSTAGRAM </h4></a>
+                <a href="http://www.facebook.com/">
+                    <h4>FACEBOOK </h4>
+                </a>
+                <a href="http://www.twitter.com/">
+                    <h4>TWITTER </h4>
+                </a>
+                <a href="http://www.instagram.com/">
+                    <h4>INSTAGRAM </h4>
+                </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <h3> <strong>ALAMAT KANTOR</strong> </h3>
@@ -216,11 +225,12 @@ if ($_SESSION['status']!="login") {
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <hr />
                 <div style="text-align:right;padding:5px;">
-                &copy;2014 yourdomain.com | <a href="http://www.binarytheme.com/" style="color:#fff;" target="_blank" >Designed By: Binarytheme.com</a>
+                    &copy;2014 yourdomain.com | <a href="http://www.binarytheme.com/" style="color:#fff;"
+                        target="_blank">Designed By: Binarytheme.com</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!--FOOTER SECTION END-->
 <!-- WE PUT SCRIPTS AT THE END TO LOAD PAGE FASTER-->

@@ -19,7 +19,7 @@
     <!-- FLEXSLIDER STYLE  -->
     <link href="assets/css/flexslider.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/style copy.css" rel="stylesheet" />
     <!-- GOOGLE FONTS  -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
      <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -116,49 +116,50 @@ if ($_SESSION['status']!="login") {
                     
                     <tr>
                         <div class="form-group">
-                            <label for="kode">ID PENGGUNA :</label>
-                            &ensp;&ensp;
-                            <input type="text" name ="kode" class="form" style="width: 60%;" 
-                            value="<?php echo $data['id_pengguna']; ?>" required DISABLED />
+                            <label for="kode">ID PENGGUNA &ensp; :</label>
+                            &ensp;
+                            <input type="text" readonly="readonly" name ="kode" class="form" style="width: 85%;" 
+                            value="<?php echo $data['id_pengguna']; ?>" required/>
                             <input type="hidden" name ="txt_kode" class="form" style="width: 1%;" 
                             value="<?php echo $data['id_pengguna']; ?>" required />
                         </div>
                         <div class="form-group">
-                            <label for="nama">NAMA LENGKAP :</label>
+                            <label for="nama">NAMA LENGKAP  :</label>
                             &ensp;
-                            <input type="text" name ="txt_nama" class="form" style="width: 60%;" 
+                            <input type="text" name ="txt_nama" class="form" style="width: 85%;" 
                             placeholder="Masukan nama lengkap, contoh: <?php echo $data['nama_lengkap']; ?>" required
                             value="<?php echo $data['nama_lengkap']; ?>" >
                         </div>
                         <div class="form-group">
-                            <label for="telepon">NO HP :</label>
-                            &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
-                            <input type="text" name ="txt_telepon" class="form" style="width: 60%;" 
+                            <label for="telepon">NO HP &ensp;&ensp;&ensp;&ensp;&ensp;&ensp; :</label>
+                            &ensp;
+                            <input type="text" name ="txt_telepon" class=" form"style="width: 85%;" 
                             placeholder="Masukan nomer yang bisa dihubungi, contoh: 081*****" required
                             value="<?php echo $data['telepon']; ?>" >
                         </div>
                         <div class="form-group">
-                            <label for="alamat1">ALAMAT 1 :</label>
-                            &ensp;&ensp;&ensp;&ensp;&ensp;
-                            <input type="text" name ="txt_alamat1" class="form" style="width: 60%;" 
+                            <label for="alamat1">ALAMAT 1 &ensp;&ensp;&ensp;&ensp; :</label>
+                            &ensp;
+                            <input type="text" name ="txt_alamat1" class="form" style="width: 85%;" 
                             placeholder="Masukan alamat anda, contoh: <?php echo $data['alamat1']; ?>" required
                             value="<?php echo $data['alamat1']; ?>" >
                         </div>
                         <div class="form-group">
-                            <label for="alamat2">ALAMAT 2 :</label>
-                            &ensp;&ensp;&ensp;&ensp;&ensp;
-                            <input type="text" name ="txt_alamat2" class="form" style="width: 60%;" 
+                            <label for="alamat2">ALAMAT 2 &ensp;&ensp;&ensp;&ensp; :</label>
+                            &ensp;
+                            <input type="text" name ="txt_alamat2" class="form" style="width: 85%;" 
                             placeholder="OPTIONAL Masukan alamat anda, contoh: <?php echo $data['alamat2']; ?>"
                             value="<?php echo $data['alamat2']; ?>" >
                         </div>
                         <div class="form-group">
-                            <label for="alamat3">ALAMAT 3 :</label>
-                            &ensp;&ensp;&ensp;&ensp;&ensp;
-                            <input type="text" name ="txt_alamat3" class="form" style="width: 60%;" 
+                            <label for="alamat3">ALAMAT 3 &ensp;&ensp;&ensp;&ensp; :</label>
+                            &ensp;
+                            <input type="text" name ="txt_alamat3" class="form" style="width: 85%;" 
                             placeholder="OPTIONAL Masukan alamat anda, contoh: <?php echo $data['alamat3']; ?>" required
                             value="<?php echo $data['alamat3']; ?>" >
                         </div>
-                        <button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
+                        <br>
+                        <button type="submit" class="btn btn-success" name="submit" style="margin-left: 400px; width: 10%; height: 40px;">SIMPAN</button>
                     </tr>
                     
                     <?php 
