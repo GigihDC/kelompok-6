@@ -2068,7 +2068,7 @@ th {
   max-width: 100%;
   margin-bottom: 20px;
 }
-.card-body.p-0 & {
+/* .card-body.p-0 & {
   thead > tr > th,
   thead > tr > td,
   tfoot > tr > th,
@@ -2083,7 +2083,7 @@ th {
       padding-right: map-get($spacers, 4);
     }
   }
-}
+} */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
