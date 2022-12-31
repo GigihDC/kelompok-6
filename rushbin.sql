@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Des 2022 pada 08.21
+-- Waktu pembuatan: 31 Des 2022 pada 16.04
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -39,7 +39,11 @@ CREATE TABLE `akun` (
 
 INSERT INTO `akun` (`username`, `password`, `role`) VALUES
 ('admin@admin', '202cb962ac59075b964b07152d234b70', 'admin'),
-('egasyahrul2@gmail.com', '123', 'user');
+('admin@gmail.com', '123', 'user'),
+('egasyahrul2@gmail.com', '123', 'user'),
+('roykimochi@gmail.com', '123', 'user'),
+('user@gmail.com', '123', 'user'),
+('UserTest1@gmail.com', '12', 'user');
 
 -- --------------------------------------------------------
 
@@ -61,13 +65,14 @@ CREATE TABLE `daftar_sampah` (
 --
 
 INSERT INTO `daftar_sampah` (`id_sampah`, `nama_sampah`, `jenis_sampah`, `jumlah_sampah`, `point`, `harga_jual`) VALUES
-('SP-0001', 'botol aqua', 'sampah plastik', 85, 30, 50000),
+('SP-0001', 'botol aqua', 'sampah plastik', 93, 30, 50000),
 ('SP-0002', 'botol lemineral', 'sampah plastik', 20, 30, 50000),
 ('SP-0003', 'botol uc1000', 'sampah kaca', 20, 10, 30000),
 ('SP-0004', 'koran', 'sampah kertas', 68, 20, 12000),
 ('SP-0005', 'perabotan kayu', 'sampah kayu', 80, 5, 15000),
 ('SP-0006', 'paku, mur, dan sekrup', 'sampah besi', 30, 10, 10000),
-('SP-0007', 'baju bekas', 'sampah kain', 30, 15, 20000);
+('SP-0007', 'baju bekas', 'sampah kain', 30, 15, 20000),
+('SP-0008', 'vas bunga', 'sampah kaca', 5, 5, 50000);
 
 -- --------------------------------------------------------
 
@@ -115,7 +120,11 @@ INSERT INTO `laporan_beli` (`kode_transaksi`, `id_sampah`, `nama_sampah`, `jumla
 ('TB00033', 'SP-0004', 'koran', 5, 100),
 ('TB00034', 'SP-0001', 'botol aqua', 5, 150),
 ('TB00035', 'SP-0001', 'botol aqua', 5, 150),
-('TB00036', 'SP-0004', 'koran', 5, 100);
+('TB00036', 'SP-0004', 'koran', 5, 100),
+('TB00037', 'SP-0001', 'botol aqua', 10, 300),
+('TB00038', 'SP-0001', 'botol aqua', 7, 210),
+('TB00039', 'SP-0009', '', 15, 0),
+('TB00040', 'SP-0008', 'vas bunga', 15, 75);
 
 -- --------------------------------------------------------
 
@@ -157,7 +166,9 @@ INSERT INTO `laporan_jual` (`kode_transaksi`, `id_sampah`, `nama_sampah`, `jumla
 ('TB00007', 'SP-0001', 'botol aqua', 20, 1000000),
 ('TB00008', 'SP-0001', 'botol aqua', 40, 2000000),
 ('TB00009', 'SP-0001', 'botol aqua', 40, 2000000),
-('TB00010', 'SP-0001', 'botol aqua', 20, 1000000);
+('TB00010', 'SP-0001', 'botol aqua', 20, 1000000),
+('TB00011', 'SP-0001', 'botol aqua', 9, 450000),
+('TB00012', 'SP-0008', 'vas bunga', 10, 500000);
 
 -- --------------------------------------------------------
 
@@ -202,7 +213,39 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `telepon`, `alamat1`, `alamat2`, `alamat3`, `point`, `username`) VALUES
-('P-00001', 'Ega Syahrul Ramadhanto', '082331879753', 'jalan salah arah tampa tujuan', 'jalan tersesat kedalam lautan dalam', 'jalan kemanapun jadi badut', 100, 'egasyahrul2@gmail.com');
+('P-00001', 'Ega Syahrul Ramadhanto', '082331879753', 'jalan salah arah tampa tujuan', 'jalan tersesat kedalam', 'jalan kemanapun', 685, 'egasyahrul2@gmail.com'),
+('P-00002', 'testing', '-', '-', '-', 'khhlj', 0, 'UserTest1@gmail.com'),
+('P-00003', 'user', '-', '-', '-', '-', 0, 'user@gmail.com'),
+('P-00004', 'admin', '-', '-', '-', '-', 0, 'admin@gmail.com'),
+('P-00005', 'roy', '-', '-', '-', '-', 0, 'roykimochi@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `penukaran`
+--
+
+CREATE TABLE `penukaran` (
+  `id_penukaran` varchar(10) NOT NULL,
+  `id_pengguna` varchar(7) NOT NULL,
+  `point` int(10) NOT NULL,
+  `nominal` int(8) NOT NULL,
+  `tanggal` date NOT NULL,
+  `waktu` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `penukaran`
+--
+
+INSERT INTO `penukaran` (`id_penukaran`, `id_pengguna`, `point`, `nominal`, `tanggal`, `waktu`) VALUES
+('PN-0000001', 'P-00001', 100, 100000, '2022-12-20', '21:03:11'),
+('PN-0000002', 'P-00001', 1000, 1000000, '2022-12-21', '21:03:11'),
+('PN-0000003', '', 400, 50000, '2022-12-31', '20:45:53'),
+('PN-0000004', '', 500, 50000, '2022-12-31', '20:49:11'),
+('PN-0000005', '', 500, 50000, '2022-12-31', '20:51:23'),
+('PN-0000006', '', 500, 50000, '2022-12-31', '20:51:35'),
+('PN-0000007', 'P-00001', 500, 50000, '2022-12-31', '20:53:38');
 
 -- --------------------------------------------------------
 
@@ -215,18 +258,37 @@ CREATE TABLE `pickup` (
   `id_pengguna` varchar(7) NOT NULL,
   `nama_lengkap` varchar(50) NOT NULL,
   `alamat` varchar(50) NOT NULL,
-  `tanggal` datetime NOT NULL,
-  `status` enum('1','2') NOT NULL
+  `tanggal` date NOT NULL,
+  `status` enum('1','2') NOT NULL,
+  `gambar1` varchar(100) NOT NULL,
+  `gambar2` varchar(100) NOT NULL,
+  `gambar3` varchar(100) NOT NULL,
+  `deskripsi` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pickup`
 --
 
-INSERT INTO `pickup` (`id_pengantaran`, `id_pengguna`, `nama_lengkap`, `alamat`, `tanggal`, `status`) VALUES
-('P-00000002', 'P-00001', 'Ega Syahrul Ramadhanto', 'Jln. Admin Sentosa III', '2022-12-12 04:55:52', '2'),
-('P-00000003', 'P-00001', 'Ega Syahrul Ramadhanto', 'Jln. Admin Sentosa III', '2022-12-12 05:20:58', '2'),
-('P-00000004', 'P-00001', 'Ega Syahrul Ramadhanto', 'Jln. Admin Sentosa III', '2022-12-12 05:57:43', '1');
+INSERT INTO `pickup` (`id_pengantaran`, `id_pengguna`, `nama_lengkap`, `alamat`, `tanggal`, `status`, `gambar1`, `gambar2`, `gambar3`, `deskripsi`) VALUES
+('P-00000002', 'P-00001', 'Ega Syahrul Ramadhanto', 'Jln. Admin Sentosa III', '0000-00-00', '1', '', '', '', ''),
+('P-00000003', 'P-00001', '', 'jalan', '0000-00-00', '2', 'image_picker1772932882898567630.jpg', 'image_picker5503527579355893623.jpg', 'image_picker7248594157827333862.jpg', 'jahskhdbda'),
+('P-00000004', 'P-00001', '', 'dfefs', '0000-00-00', '2', 'image_picker3324937936128804223.jpg', 'null', 'null', 'sfebsfb'),
+('P-00000005', 'P-00001', '', 'erwwrer', '0000-00-00', '2', 'image_picker5481319522610670450.jpg', 'image_picker552511369912249104.jpg', 'image_picker6313571750168673872.jpg', 'wrerwrer'),
+('P-00000006', 'P-00001', '', 'erwwrer', '0000-00-00', '2', 'image_picker5481319522610670450.jpg', 'image_picker552511369912249104.jpg', 'image_picker6313571750168673872.jpg', 'wrerwrer'),
+('P-00000007', 'P-00001', '', 'erwwrer', '0000-00-00', '2', 'image_picker5481319522610670450.jpg', 'image_picker552511369912249104.jpg', 'image_picker6313571750168673872.jpg', 'wrerwrer'),
+('P-00000008', 'P-00001', '', 'erwwrer', '0000-00-00', '2', '', '', '', 'wrerwrer'),
+('P-00000009', 'P-00001', '', 'erwwrer', '2022-12-31', '2', '', '', '', 'wrerwrer'),
+('P-00000010', 'P-00001', '', 'erwwrer', '2022-12-31', '2', 'image_picker5481319522610670450.jpg', 'image_picker552511369912249104.jpg', 'image_picker6313571750168673872.jpg', 'wrerwrer'),
+('P-00000011', 'P-00001', '', 'erwwrer', '2022-12-31', '2', 'image_picker5481319522610670450.jpg', 'image_picker552511369912249104.jpg', 'image_picker6313571750168673872.jpg', 'wrerwrer'),
+('P-00000012', 'P-00001', '', 'erwwrer', '2022-12-31', '2', 'image_picker7459537218882915200.jpg', 'image_picker4400700565189888315.jpg', 'image_picker8374591830323584527.jpg', 'wrerwrer'),
+('P-00000013', 'P-00001', '', 'erwwrer', '2022-12-31', '2', 'image_picker7459537218882915200.jpg', 'image_picker4400700565189888315.jpg', 'image_picker8374591830323584527.jpg', 'wrerwrer'),
+('P-00000014', 'P-00001', '', 'dsfsdfdsd', '2022-12-31', '2', 'image_picker4631034021121134538.jpg', 'image_picker6060431813095618947.jpg', 'image_picker5873929222777068163.jpg', 'fsdfsesfesefe'),
+('P-00000015', 'P-00001', '', 'sdfesfdfesfe', '0000-00-00', '2', '', '', '', 'adasds'),
+('P-00000016', 'P-00001', 'Ega Syahrul Ramadhanto', 'sdfesfdfesfe', '0000-00-00', '1', '', '', '', 'adasds'),
+('P-00000017', 'P-00001', 'Ega Syahrul Ramadhanto', 'sdfesfdfesfe', '0000-00-00', '2', '', '', '', 'adasds'),
+('P-00000018', 'P-00001', 'Ega Syahrul Ramadhanto', 'sjnakdnandw', '2022-12-31', '1', 'image_picker6528486603497472925.jpg', 'image_picker5908239954569088516.jpg', 'image_picker5777633934251737791.jpg', 'akmkdnanwndwanfawnfaw'),
+('P-00000019', 'P-00001', 'Ega Syahrul Ramadhanto', 'Jalan Lurus', '2022-12-31', '1', 'image_picker65151383403159307.jpg', 'image_picker9069553818722150296.jpg', 'image_picker5731819789878056302.jpg', 'Sekarung kertas');
 
 -- --------------------------------------------------------
 
@@ -284,7 +346,11 @@ INSERT INTO `transaksi_beli` (`kode_transaksi`, `tanggal`, `waktu`, `nama_lengka
 ('TB00033', '2022-12-12', '10:15:58', 'Ega Syahrul Ramadhanto', 100, 'P-00001'),
 ('TB00034', '2022-12-12', '10:40:26', 'Ega Syahrul Ramadhanto', 150, 'P-00001'),
 ('TB00035', '2022-12-12', '10:41:51', 'Ega Syahrul Ramadhanto', 150, 'P-00001'),
-('TB00036', '2022-12-12', '10:44:42', 'Ega Syahrul Ramadhanto', 100, 'P-00001');
+('TB00036', '2022-12-12', '10:44:42', 'Ega Syahrul Ramadhanto', 100, 'P-00001'),
+('TB00037', '2022-12-31', '01:59:23', 'Ega Syahrul Ramadhanto', 300, 'P-00001'),
+('TB00038', '2022-12-31', '09:07:02', 'Ega Syahrul Ramadhanto', 210, 'P-00001'),
+('TB00039', '2022-12-31', '09:19:04', 'Ega Syahrul Ramadhanto', 0, 'P-00001'),
+('TB00040', '2022-12-31', '09:19:46', 'Ega Syahrul Ramadhanto', 75, 'P-00001');
 
 -- --------------------------------------------------------
 
@@ -315,7 +381,9 @@ INSERT INTO `transaksi_jual` (`kode_transaksi`, `tanggal`, `waktu`, `nama_lengka
 ('TB00007', '0000-00-00', '00:00:00', 'Ega Syahrul Ramadhanto', 2000000),
 ('TB00008', '0000-00-00', '00:00:00', 'Ega Syahrul Ramadhanto', 2000000),
 ('TB00009', '0000-00-00', '00:00:00', 'Ega Syahrul Ramadhanto', 2000000),
-('TB00010', '2022-12-12', '10:20:31', 'Ega Syahrul Ramadhanto', 1000000);
+('TB00010', '2022-12-12', '10:20:31', 'Ega Syahrul Ramadhanto', 1000000),
+('TB00011', '2022-12-31', '09:07:36', 'Ega Syahrul Ramadhanto', 450000),
+('TB00012', '2022-12-31', '09:20:20', 'Ega Syahrul Ramadhanto', 500000);
 
 --
 -- Indexes for dumped tables
@@ -346,6 +414,12 @@ ALTER TABLE `pegawai`
 ALTER TABLE `pengguna`
   ADD PRIMARY KEY (`id_pengguna`),
   ADD KEY `username` (`username`);
+
+--
+-- Indeks untuk tabel `penukaran`
+--
+ALTER TABLE `penukaran`
+  ADD PRIMARY KEY (`id_penukaran`);
 
 --
 -- Indeks untuk tabel `pickup`
