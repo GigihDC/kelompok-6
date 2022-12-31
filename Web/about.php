@@ -19,7 +19,7 @@
     <!-- FLEXSLIDER STYLE  -->
     <link href="assets/css/flexslider.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style copy.css" rel="stylesheet" />
+    <link href="assets/css/style_copy.css" rel="stylesheet" />
     <!-- GOOGLE FONTS  -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
      <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -44,7 +44,7 @@ if ($_SESSION['status']!="login") {
                 </button>
                 <a class="navbar-brand" href="home.php">
 
-                    <img src="assets/img/portfolio/logo.png" />
+                    <img src="assets/img/portfolio/logo1.png" />
                 </a>
 
             </div>
@@ -165,16 +165,8 @@ if ($_SESSION['status']!="login") {
 
 									<p >
 										<strong>RUSHBIN ETERPRISE</strong> merupakan perusahan yang bergerak di bidang lingkungan hidup.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur <strong> consectetur adipiscing elit.</strong>  felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-									</p>
-                    <p >
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur <strong> consectetur adipiscing elit.</strong>  felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis felis dolor vitae.
+                                        Bank Sampah adalah sebuah lembaga yang bergerak di bidang bisnis pengelolaan sampah. Alur kerja bank sampah meliputi proses pengumpulan sampah yang sudah dipisahkan berdasarkan jenisnya sampai proses distribusi ke pabrik daur ulang atau pencacah sampah. Aktivitas utama bank sampah yaitu meliputi prosedur pengelolaan sampah terpilah, transaksi dan administrasi. Agar dapat menyetorkan sampah ke bank sampah terdapat sejumlah metode penyetoran sampah oleh nasabah/customer yang dapat dipilih, diantaranyya setor sampah langsung dan permintaan jemput sampah. Proses administrasi bisnis bank sampah saat ini masih dilakukan secara manual dan menyebabkan beberapa masalah seperti pendataan administrasi yang tercatat tidak rapi, terjadi hilang data/duplikasi, customer tidak dapat akses informasi perubahan jadwal penjemputan sampah dan informasis riwayat transaksi.
+Untuk mengatasi masalah ini, maka diperlukan sebuah aplikasi yang dapat digunakan untuk melakukan transaksi pengelolaan di bank sampah. Untuk itu kami membuat sebuah aplikasi bank sampah dengan nama Rushbin. Rushbin adalah sebuah apikasi bank sampah yang bertujuan untuk membantu pengelola bank sampah dan masyarakat untuk melakukan transaksi dan administrasi. Nantinya dengan aplikasi ini masyarakat/customer dapat meminta penjemputan sampah, selanjutnya sampah akan diambil oleh pihak bank sampah dan akan di hitung beratnya. Dari hasil penghitungan berat tersebut customer akan mendapatkan poin, yang nantinya poin yang telah terkumpul tersebut dapat ditukarkan dengan uang. Poin yang akan ditukarkan harus memenuhi jumlah minimum untuk dapat melakukan penukaran poin.
 									</p>
                    
                       </div>
@@ -190,13 +182,13 @@ if ($_SESSION['status']!="login") {
     </div>
     <!--JUST SECTION END-->
 
-<div class="footer-sec">
+    <div class="footer-sec">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 social-div">
                 <h3> <strong>CONTACT PERSON</strong> </h3>
                 <br />
-                <a href="http://www.whatsapp.com/">
+                <a href="https://wa.me/6282331879753">
                     <h4>WHATSAPP: 082331879753 </h4>
                 </a>
             </div>
@@ -233,17 +225,40 @@ if ($_SESSION['status']!="login") {
     </div>
 </div>
 <!--FOOTER SECTION END-->
-<!-- WE PUT SCRIPTS AT THE END TO LOAD PAGE FASTER-->
-<!--CORE SCRIPTS PLUGIN-->
-<script src="assets/js/jquery-1.11.1.min.js"></script>
-<!--BOOTSTRAP SCRIPTS PLUGIN-->
-<script src="assets/js/bootstrap.js"></script>
-<!--WOW SCRIPTS PLUGIN-->
-<script src="assets/js/wow.js"></script>
-<!--FLEXSLIDER SCRIPTS PLUGIN-->
-<script src="assets/js/jquery.flexslider.js"></script>
-<!--CUSTOM SCRIPTS -->
-<script src="assets/js/custom.js"></script>
+    <!-- WE PUT SCRIPTS AT THE END TO LOAD PAGE FASTER-->
+    <!--CORE SCRIPTS PLUGIN-->
+    <script src="assets/js/jquery-1.11.1.min.js"></script>
+    <!--BOOTSTRAP SCRIPTS PLUGIN-->
+    <script src="assets/js/bootstrap.js"></script>
+    <!--WOW SCRIPTS PLUGIN-->
+    <script src="assets/js/wow.js"></script>
+    <!--FLEXSLIDER SCRIPTS PLUGIN-->
+    <script src="assets/js/jquery.flexslider.js"></script>
+    <!--CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+    <!-- jquery -->
+    <script src="assets/js/jquery-3.1.0.min.js"></script>
+    <!-- jquery datatable -->
+    <script type="text/javascript" charset="utf8" src="assets/js/datatabel/media/js/jquery.dataTables.js">
+    </script>
+
+    <!-- fungsi datatable -->
+    <script>
+        $(document).ready(function () {
+            $('#table1').DataTable({
+                "pagingType": "full_numbers",
+                "info": false
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table2').DataTable({
+                "pagingType": "full_numbers",
+                "info": false
+            });
+        });
+    </script>
 </body>
 
 </html>
