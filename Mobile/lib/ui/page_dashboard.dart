@@ -5,6 +5,7 @@ import '../model/models.dart';
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
 import 'page_poin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -12,8 +13,16 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  String point = "";
   Screen size;
   int _selectedIndex = 1;
+
+  Future getPoint() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      point = (prefs.getString('point') ?? "");
+    });
+  }
 
   List<Property> productList = List();
   // List<Property> featuredList = List();
@@ -32,47 +41,48 @@ class _DashboardPageState extends State<DashboardPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPoint();
 
     productList
       ..add(Property(
           propertyName: "Botol Plastik",
           // propertyLocation: "Ahmedabad ",
-          image: "product_1.jpg",
+          image: "assets/product_1.jpg",
           propertyPrice: "Rp. 1000 / Kg"))
       ..add(Property(
           propertyName: "Botol Kaca",
           // propertyLocation: "Baroda ",
-          image: "product_2.jpg",
+          image: "assets/product_2.jpg",
           propertyPrice: "Rp. 1500 / Kg"))
       ..add(Property(
           propertyName: "Kaleng",
           // propertyLocation: "Pune ",
-          image: "product_3.jpg",
+          image: "assets/product_3.jpg",
           propertyPrice: "Rp. 1000 / Kg"))
       ..add(Property(
           propertyName: "Plastik Buram",
           // propertyLocation: "Mumbai ",
-          image: "product_4.jpg",
+          image: "assets/product_4.jpg",
           propertyPrice: "Rp. 1000 / Kg"))
       ..add(Property(
           propertyName: "Plastik Bening",
           // propertyLocation: "Mumbai ",
-          image: "product_5.jpg",
+          image: "assets/product_5.jpg",
           propertyPrice: "Rp. 1500 / Kg"))
       ..add(Property(
           propertyName: "Kertas",
           // propertyLocation: "Gandhinagar ",
-          image: "product_6.jpg",
+          image: "assets/product_6.jpg",
           propertyPrice: "Rp. 1000 / Kg"))
       ..add(Property(
           propertyName: "Kertas Duplex",
           // propertyLocation: "Pune ",
-          image: "product_7.jpg",
+          image: "assets/product_7.jpg",
           propertyPrice: "Rp. 500 / Kg"))
       ..add(Property(
           propertyName: "Kardus",
           // propertyLocation: "Ahmedabad ",
-          image: "product_8.jpg",
+          image: "assets/product_8.jpg",
           propertyPrice: "Rp. 2000 / Kg"));
     // ..add(Property(
     //     propertyName: "Velone City",
@@ -135,8 +145,9 @@ class _DashboardPageState extends State<DashboardPage> {
               padding: EdgeInsets.only(top: size.getWidthPx(36)),
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: size.getWidthPx(20),),
                   titleWidget(),
-                  SizedBox(height: size.getWidthPx(10)),
+                  SizedBox(height: size.getWidthPx(20)),
                   upperBoxCard(),
                 ],
               ),
@@ -189,7 +200,7 @@ class _DashboardPageState extends State<DashboardPage> {
             horizontal: size.getWidthPx(20), vertical: size.getWidthPx(16)),
         borderOnForeground: true,
         child: Container(
-          height: size.getWidthPx(150),
+          height: size.getWidthPx(160),
           child: Column(
             children: <Widget>[
               // _searchWidget(),
@@ -202,12 +213,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   fontWeight: FontWeight.bold),
               SizedBox(height: 10.0),
               leftAlignText(
-                  text: "10O Poin",
+                  text: point,
                   leftPadding: size.getWidthPx(16),
                   textColor: Colors.blue,
                   fontSize: 40.0,
                   fontWeight: FontWeight.bold),
-              SizedBox(height: 90.0),
+              SizedBox(height: 50.0),
               GestureDetector(
                   onTap: () {
                     //Navigate to Forgot Password Screen...
@@ -221,7 +232,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: Text("Tukarkan Poin  ->",
                             style: TextStyle(
                                 fontFamily: 'Exo2',
-                                fontSize: 14.0,
+                                fontSize: 18.0,
                                 color: Colors.blueAccent.shade700))),
                   )),
               // HorizontalList(
@@ -235,17 +246,17 @@ class _DashboardPageState extends State<DashboardPage> {
         ));
   }
 
-  BoxField _searchWidget() {
-    return BoxField(
-        controller: TextEditingController(),
-        focusNode: FocusNode(),
-        hintText: "Select by city, area or locality.",
-        lableText: "Search...",
-        obscureText: false,
-        onSaved: (String val) {},
-        icon: Icons.search,
-        iconColor: colorCurve);
-  }
+  // BoxField _searchWidget() {
+  //   return BoxField(
+  //       controller: TextEditingController(),
+  //       focusNode: FocusNode(),
+  //       hintText: "Select by city, area or locality.",
+  //       lableText: "Search...",
+  //       obscureText: false,
+  //       onSaved: (String val) {},
+  //       icon: Icons.search,
+  //       iconColor: colorCurve);
+  // }
 
   Padding leftAlignText({text, leftPadding, textColor, fontSize, fontWeight}) {
     return Padding(

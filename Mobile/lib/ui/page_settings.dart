@@ -4,6 +4,7 @@ import 'page_login.dart';
 import 'page_terms&conditions.dart';
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Settings",
+        title: Text("More",
             style:
                 TextStyle(fontFamily: "Exo2", color: textSecondaryLightColor)),
         backgroundColor: Colors.white,
@@ -46,6 +47,7 @@ class _SettingPageState extends State<SettingPage> {
               children: <Widget>[
                 // accountSection(),
                 // pushNotificationSection(),
+                SizedBox(height: 10),
                 getHelpSection(),
               ],
             ),
@@ -58,7 +60,7 @@ class _SettingPageState extends State<SettingPage> {
   SettingSection getHelpSection() {
     return SettingSection(
       headerText: "Get Help".toUpperCase(),
-      headerFontSize: 15.0,
+      headerFontSize: 18.0,
       headerTextColor: Colors.black87,
       backgroundColor: Colors.white,
       disableDivider: false,
@@ -80,13 +82,6 @@ class _SettingPageState extends State<SettingPage> {
                     MaterialPageRoute(
                         builder: (context) => TermsConditionPage()));
               }),
-        ),
-        Container(
-          child: TileRow(
-            label: "Feedback",
-            disableDivider: false,
-            onTap: () {},
-          ),
         ),
         Container(
           child: TileRow(
@@ -125,8 +120,46 @@ class _SettingPageState extends State<SettingPage> {
             ),
             TextButton(
               child: const Text('Yes'),
-              onPressed: () {
-                Navigator.pushReplacement(context,
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                prefs.setBool('isLoggedIn', false);
+                await prefs.setString(
+                  'username',
+                  "",
+                );
+                await prefs.setString(
+                  'id_pengguna',
+                  "",
+                );
+                await prefs.setString(
+                  'nama_lengkap',
+                  "",
+                );
+                await prefs.setString(
+                  'telepon',
+                  "",
+                );
+                await prefs.setString(
+                  'alamat1',
+                  "",
+                );
+                await prefs.setString(
+                  'alamat2',
+                  "",
+                );
+                await prefs.setString(
+                  'alamat3',
+                  "",
+                );
+                await prefs.setString(
+                  'point',
+                  "",
+                );
+                await prefs.setString(
+                  'password',
+                  "",
+                );
+                Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:rushbin/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,9 @@ import '../widgets/widgets.dart';
 import 'page_forgotpass.dart';
 import 'page_home.dart';
 import 'page_signup.dart';
+import 'page_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,46 +27,206 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode _emailFocusNode = new FocusNode();
   FocusNode _passFocusNode = new FocusNode();
   String _email, _password;
-  bool _isObscure = true;
+  bool _isObscure = false;
+  bool _visible = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Screen size;
 
-  bool isPasswordVisible = false;
+  bool isPasswordVisible = true;
+  Future userLogin() async {
+    //Login API URL
+    //use your local IP address instead of localhost or use Web API
+    String url = "${fire.URL_API}/login.php";
 
-  Future login() async {
-    // var url = Uri.http("192.168.1.16", '/PHP2/login.php', {'q': '{http}'});
-    // var response = await http.post(url, body: {
-    //   "username": _emailController.text,
-    //   "password": _passwordController.text,
-    // });
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
 
-    Uri url = Uri.parse(
-        "http://192.168.1.16/PHP2/login.php?email=${_emailController.text.toString()}&password=${_passwordController.text.toString()}");
-    var response = await http.get(url);
-    var data = jsonDecode(response.body);
+    // Getting username and password from Controller
+    var data = {
+      'username': _emailController.text,
+      'password': _passwordController.text,
+    };
 
-    if (data.toString() == "Success") {
-      Fluttertoast.showToast(
-        msg: 'Login Successful',
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        toastLength: Toast.LENGTH_SHORT,
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ),
-      );
+    //Starting Web API Call.
+    var response = await http.post(Uri.parse(url), body: json.encode(data));
+    if (response.statusCode == 200) {
+      //Server response into variable
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['loginStatus'] == true) {
+        setState(() {
+          loginMessage("Berhasil Login");
+          //hide progress indicator
+          _visible = false;
+        });
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+
+        await prefs.setString(
+          'username',
+          msg['userInfo']['username'],
+        );
+
+        await prefs.setString(
+          'id_pengguna',
+          msg['userInfo']['id_pengguna'],
+        );
+
+        await prefs.setString(
+          'nama_lengkap',
+          msg['userInfo']['nama_lengkap'],
+        );
+
+        await prefs.setString(
+          'telepon',
+          msg['userInfo']['telepon'],
+        );
+
+        await prefs.setString(
+          'alamat1',
+          msg['userInfo']['alamat1'],
+        );
+
+        await prefs.setString(
+          'alamat2',
+          msg['userInfo']['alamat2'],
+        );
+
+        await prefs.setString(
+          'alamat3',
+          msg['userInfo']['alamat3'],
+        );
+
+        await prefs.setString(
+          'point',
+          msg['userInfo']['point'],
+        );
+
+        await prefs.setString(
+          'password',
+          msg['userInfo']['password'],
+        );
+        // Navigate to Home Screen
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+      }
     } else {
-      Fluttertoast.showToast(
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        msg: 'Email and password invalid',
-        toastLength: Toast.LENGTH_SHORT,
-      );
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
     }
+  }
+
+  // Future<void> _login() async {
+  //     Uri url = Uri.parse(
+  //         "http://192.168.1.9/automation/api/login.php?username=${_emailController.text.toString()}&password=${_passwordController.text.toString()}");
+  //     var response = await http.get(url);
+
+  //     if (response.statusCode == 200) {
+        
+  //       print(response.body);
+  //       var msg = jsonDecode(response.body);
+        
+  //       if (msg['loginStatus'] == true) {
+          
+  //         final prefs = await SharedPreferences.getInstance();
+  //         prefs.setBool('isLoggedIn', true);
+          
+  //         await prefs.setString('username', msg['userinfo']['username']);
+
+  //         // Fluttertoast.showToast(
+  //         //   msg: 'Login Successful',
+  //         //   backgroundColor: Colors.green,
+  //         //   textColor: Colors.white,
+  //         //   toastLength: Toast.LENGTH_SHORT,
+  //         // );
+
+  //         setState(() {
+  //           loginMessage("Berhasil Login");
+  //         });
+          
+  //       } else {
+  //         setState(() {
+            
+  //           showMessage(msg["message"]);
+
+  //         });
+
+  //         // Fluttertoast.showToast(
+  //         //   backgroundColor: Colors.red,
+  //         //   textColor: Colors.white,
+  //         //   msg: 'Email and password invalid',
+  //         //   toastLength: Toast.LENGTH_SHORT
+  //         //   );
+  //       }
+  //     } else {
+  //       setState(() {
+  //         showMessage("Something is Wrong in Your Connection");
+  //       });
+  //       // Fluttertoast.showToast(
+  //       //     backgroundColor: Colors.red,
+  //       //     textColor: Colors.white,
+  //       //     msg: 'Something Error in Your Connection',
+  //       //     toastLength: Toast.LENGTH_SHORT
+  //       //     );
+  //     }      
+  //   }
+
+    Future<void> showMessage(String _msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(_msg),
+          actions: <Widget>[
+            TextButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> loginMessage(String _msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(_msg),
+          actions: <Widget>[
+            TextButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -116,18 +279,18 @@ class _LoginPageState extends State<LoginPage> {
   RichText _textAccount() {
     return RichText(
       text: TextSpan(
-          text: "Don't have an account? ",
+          text: "Belum punya akun? ",
           children: [
             TextSpan(
               style: TextStyle(color: Colors.deepOrange),
-              text: 'Create your account.',
+              text: 'Buat akun disini.',
               recognizer: TapGestureRecognizer()
                 ..onTap = () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => SignUpPage())),
             )
           ],
           style: TextStyle(
-              color: Colors.black87, fontSize: 14, fontFamily: 'Exo2')),
+              color: Colors.black87, fontSize: 18, fontFamily: 'Exo2')),
     );
   }
 
@@ -138,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
           Color.fromRGBO(45, 160, 240, 1.0)
         ]),
         style: TextStyle(
-            fontFamily: 'Exo2', fontSize: 36, fontWeight: FontWeight.bold));
+            fontFamily: 'Exo2', fontSize: 40, fontWeight: FontWeight.bold));
   }
 
   TextFormField _emailWidget() {
@@ -147,7 +310,7 @@ class _LoginPageState extends State<LoginPage> {
         focusNode: _emailFocusNode,
         style: TextStyle(height: 1.5),
         decoration: InputDecoration(
-            labelStyle: TextStyle(fontFamily: 'Exo2', color: textPrimaryColor),
+            labelStyle: TextStyle(fontSize: 24, fontFamily: 'Exo2', color: textPrimaryColor),
             labelText: 'Email',
             hintText: 'Masukkan Email',
             prefixIcon: Icon(Icons.email, color: colorCurve),
@@ -180,7 +343,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
             hintText: "Enter Password",
             labelText: "Password",
-            labelStyle: TextStyle(fontFamily: 'Exo2', color: textPrimaryColor),
+            labelStyle: TextStyle(fontSize: 24, fontFamily: 'Exo2', color: textPrimaryColor),
             prefixIcon: Icon(
               Icons.lock_outline,
               color: colorCurve,
@@ -196,7 +359,7 @@ class _LoginPageState extends State<LoginPage> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: BorderSide(color: colorCurve))),
-        obscureText: true,
+        obscureText: _isObscure ? false : true,
         onSaved: (String val) {
           _password = val;
         });
@@ -224,48 +387,42 @@ class _LoginPageState extends State<LoginPage> {
         //   Navigator.pushReplacement(context,
         //             MaterialPageRoute(builder: (context) => HomePage()));
         // }
-        onPressed: () async {
-          // Going to DashBoard
-          if (_formKey.currentState.validate()) {
-            Route route = MaterialPageRoute(builder: (context) => HomePage());
-            Navigator.push(context, route);
-            var result;
-            if (result.uid = null) {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(content: Text(result.code));
-                  });
-            }
-          }
+        onPressed: () {
+          userLogin();
+          // final isValidForm = _formKey.currentState.validate();
+          // if (isValidForm) {
+          //   _login();
+          // } else {
+          //   return null;
+          // }
         },
       ),
     );
   }
 
-  Row _socialButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        socialCircleAvatar("icons/icnfb.png", () {}),
-        SizedBox(width: size.getWidthPx(18)),
-        socialCircleAvatar("icons/icn_twitter.png", () {}),
-        SizedBox(width: size.getWidthPx(18)),
-        socialCircleAvatar("icons/icngmail.png", () {}),
-      ],
-    );
-  }
+  // Row _socialButtons() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: <Widget>[
+  //       socialCircleAvatar("assets/icons/icnfb.png", () {}),
+  //       SizedBox(width: size.getWidthPx(18)),
+  //       socialCircleAvatar("assets/icons/icn_twitter.png", () {}),
+  //       SizedBox(width: size.getWidthPx(18)),
+  //       socialCircleAvatar("assets/icons/icngmail.png", () {}),
+  //     ],
+  //   );
+  // }
 
-  GestureDetector socialCircleAvatar(String assetIcon, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: CircleAvatar(
-        maxRadius: size.getWidthPx(24),
-        backgroundColor: Colors.transparent,
-        child: Image.asset(assetIcon),
-      ),
-    );
-  }
+  // GestureDetector socialCircleAvatar(String assetIcon, VoidCallback onTap) {
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: CircleAvatar(
+  //       maxRadius: size.getWidthPx(24),
+  //       backgroundColor: Colors.transparent,
+  //       child: Image.asset(assetIcon),
+  //     ),
+  //   );
+  // }
 
   loginFields() => Container(
         child: Form(
@@ -290,22 +447,22 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.only(right: size.getWidthPx(8)),
                       child: Align(
                           alignment: Alignment.centerRight,
-                          child: Text("Forgot Password?",
+                          child: Text("Lupa Password?",
                               style: TextStyle(
                                   fontFamily: 'Exo2',
-                                  fontSize: 14.0,
+                                  fontSize: 18.0,
                                   color: Colors.blueAccent.shade700))),
                     )),
-                SizedBox(height: size.getWidthPx(8)),
-                _loginButtonWidget(),
                 SizedBox(height: size.getWidthPx(28)),
-                Text(
-                  "Or Login with",
-                  style: TextStyle(
-                      fontFamily: 'Exo2', fontSize: 16.0, color: Colors.grey),
-                ),
-                SizedBox(height: size.getWidthPx(12)),
-                _socialButtons()
+                _loginButtonWidget(),
+                // SizedBox(height: size.getWidthPx(28)),
+                // Text(
+                //   "Or Login with",
+                //   style: TextStyle(
+                //       fontFamily: 'Exo2', fontSize: 16.0, color: Colors.grey),
+                // ),
+                // SizedBox(height: size.getWidthPx(12)),
+                // _socialButtons()
               ],
             )),
       );

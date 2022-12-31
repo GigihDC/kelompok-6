@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/utils.dart';
 import '../LocalBindings.dart';
 import 'page_home.dart';
@@ -8,17 +9,38 @@ import 'page_onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen> {
+  static const String KEYLOGIN = "login";
   Screen size;
 
   @override
   void initState() {
     super.initState();
+    timingsplash();
+  }
+
+  void timingsplash() async {
+    var sharePref = await SharedPreferences.getInstance();
+
+    var isLogeedIn = sharePref.getBool(KEYLOGIN);
+
     Timer(Duration(seconds: 5), () {
       navigateFromSplash();
+      if (isLogeedIn != null) {
+        if (isLogeedIn) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
+        }
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      }
     });
   }
 
@@ -31,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Container(
                 width: size.getWidthPx(250),
                 height: size.getWidthPx(250),
-                child: Image.asset("icons/logo_splash.png"))));
+                child: Image.asset("assets/icons/logo_splash.png"))));
   }
 
   Future navigateFromSplash() async {

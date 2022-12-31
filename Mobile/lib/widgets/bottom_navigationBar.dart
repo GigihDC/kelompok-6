@@ -60,8 +60,8 @@ class _BottomNavBarState extends State<BottomNavBar>
         ),
         BottomNavigationBarItem(
           backgroundColor: Colors.grey.shade50,
-          icon: Icon(Icons.settings),
-          label: 'Settings',
+          icon: Icon(Icons.more_horiz),
+          label: 'More',
         ),
       ],
     );

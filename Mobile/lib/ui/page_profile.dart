@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/utils.dart';
 import '../widgets/utils_widget.dart';
 import '../widgets/widgets.dart';
@@ -13,6 +14,36 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String nama_lengkap = "";
+  String username = "";
+  String id_pengguna= "";
+  String telepon = "";
+  String alamat1 = "";
+  String alamat2 = "";
+  String alamat3 = "";
+  String pass = "";
+
+  Future getNama() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = (prefs.getString('username') ?? "");
+      id_pengguna = (prefs.getString('id_pengguna') ?? "");
+      nama_lengkap = (prefs.getString('nama_lengkap') ?? "");
+      telepon = (prefs.getString('telepon') ?? "");
+      alamat1 = (prefs.getString('alamat1') ?? "");
+      alamat2 = (prefs.getString('alamat2') ?? "");
+      alamat3 = (prefs.getString('alamat3') ?? "");
+      pass = (prefs.getString('password') ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getNama();
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +85,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 20,
                   ),
                   Text(
-                    'Mr. Harsh Bhavsar',
+                    nama_lengkap,
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Text(
-                    'Photographer',
+                    username,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -100,26 +131,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ListTile(
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 12, vertical: 4),
-                                          leading: Icon(Icons.my_location),
-                                          title: Text("Location"),
-                                          subtitle: Text("USA"),
-                                        ),
-                                        ListTile(
-                                          leading: Icon(Icons.email),
-                                          title: Text("Email"),
-                                          subtitle:
-                                              Text("harshbhavsar@gmail.com"),
-                                        ),
-                                        ListTile(
                                           leading: Icon(Icons.phone),
-                                          title: Text("Phone"),
-                                          subtitle: Text("99--99876-56"),
+                                          title: Text("Telepon"),
+                                          subtitle: Text(telepon),
                                         ),
                                         ListTile(
-                                          leading: Icon(Icons.person),
-                                          title: Text("About Me"),
-                                          subtitle: Text(
-                                              "This is a about me link and you can khow about me in this section."),
+                                          leading: Icon(Icons.my_location),
+                                          title: Text("Alamat 1"),
+                                          subtitle: Text(alamat1),
+                                        ),
+                                        ListTile(
+                                          leading: Icon(Icons.my_location),
+                                          title: Text("Alamat 2"),
+                                          subtitle: Text(alamat2),
+                                        ),
+                                        ListTile(
+                                          leading: Icon(Icons.my_location),
+                                          title: Text("Alamat 3"),
+                                          subtitle: Text(alamat3),
                                         ),
                                       ],
                                     ),
